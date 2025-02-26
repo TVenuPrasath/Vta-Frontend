@@ -1,58 +1,51 @@
+import axios from "axios";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const EmployerRegister = () => {
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    phone: "",
-    location: "",
-    achievements: [{ description: "", year: "" }],
-    profileImage: null,
-    company: "",
-    designation: "",
-    fromYear: "",
-    toYear: "",
-    address1: "",
-    address2: "",
-    city: "",
-    state: "",
-    country: "",
-    zipcode: "",
+    password: "",
+    profilePicture: "",
+    mobileNumber: "",
+    currentLocation: "",
+    achievements: [{ description: "", yearOfAchievement: "" }],
+    professionalDetails: {
+      currentCompanyName: "",
+      currentDesignation: "",
+      fromYear: "",
+      toYear: "",
+    },
+    companyAddress: {
+      address1: "",
+      address2: "",
+      city: "",
+      state: "",
+      country: "",
+      zipCode: "",
+    },
     experience: "",
     hiringLevels: [],
     referralCode: "",
     industryType: "",
     function: "",
     hiringSkills: "",
+    agreedToTerms: false,
   });
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleFileChange = (e) => {
-    setFormData({ ...formData, profileImage: e.target.files[0] });
-  };
-
-  const addMoreAchievements = () => {
-    setFormData({
-      ...formData,
-      achievements: [...formData.achievements, { description: "", year: "" }],
-    });
-  };
-  const handleSubmit = (e) => {
-    e.preventDefault(); // Prevents page reload
-    console.log("Form Data Submitted:", formData);
-    alert("Form submitted successfully!"); // Temporary alert (replace with API call)
-  };
-
   const [expanded, setExpanded] = useState(false);
+
   const [selectedOptions, setSelectedOptions] = useState([]);
+
+  const levels = ["Junior Level", "Mid Level", "High Level", "Top Management"];
+
   const toggleDropdown = () => {
     setExpanded(!expanded);
   };
+
   const handleCheckboxChange = (e, level) => {
     let updatedOptions = [...selectedOptions];
 
@@ -69,8 +62,131 @@ const EmployerRegister = () => {
 
     setSelectedOptions(updatedOptions);
   };
-  const levels = ["Junior Level", "Mid Level", "High Level", "Top Management"];
-  const HiringLevelDropdown = () => {};
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    if (name.includes(".")) {
+      const [parent, child] = name.split(".");
+      setFormData((prevState) => ({
+        ...prevState,
+        [parent]: {
+          ...prevState[parent],
+          [child]: value,
+        },
+      }));
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0]; // Get the selected file
+    if (!file) {
+      Swal.fire("Error", "Please select an image file.", "error");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("profilePicture", file);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/employer/upload",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      if (response.status === 200 && response.data.filePath) {
+        // Update formData with the uploaded file path
+        setFormData((prevData) => ({
+          ...prevData,
+          profilePicture: response.data.filePath, // Save the file path
+        }));
+
+        Swal.fire(
+          "Success",
+          "Profile picture uploaded successfully!",
+          "success"
+        );
+      } else {
+        Swal.fire("Error", "Failed to upload profile picture.", "error");
+      }
+    } catch (error) {
+      console.error("Profile picture upload failed:", error);
+      Swal.fire("Error", "Something went wrong. Try again!", "error");
+    }
+  };
+
+  const addMoreAchievements = () => {
+    setFormData((prevState) => ({
+      ...prevState,
+      achievements: [
+        ...prevState.achievements,
+        { description: "", yearOfAchievement: "" },
+      ],
+    }));
+  };
+
+  const handleAchievementChange = (index, field, value) => {
+    const updatedAchievements = [...formData.achievements];
+    updatedAchievements[index][field] = value;
+    setFormData({ ...formData, achievements: updatedAchievements });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/employer/register",
+        formData // profilePicture path is included here
+      );
+
+      if (response.status === 200) {
+        Swal.fire("Success", "Employer registered successfully!", "success");
+
+        // Reset form after successful registration
+        setFormData({
+          firstName: "",
+          lastName: "",
+          email: "",
+          password: "",
+          profilePicture: null, // Reset profile picture
+          mobileNumber: "",
+          currentLocation: "",
+          achievements: [{ description: "", yearOfAchievement: "" }],
+          professionalDetails: {
+            currentCompanyName: "",
+            currentDesignation: "",
+            fromYear: "",
+            toYear: "",
+          },
+          companyAddress: {
+            address1: "",
+            address2: "",
+            city: "",
+            state: "",
+            country: "",
+            zipCode: "",
+          },
+          experience: "",
+          hiringLevels: [],
+          referralCode: "",
+          industryType: "",
+          function: "",
+          hiringSkills: "",
+          agreedToTerms: false,
+        });
+      }
+    } catch (error) {
+      console.error("Registration failed:", error);
+      Swal.fire("Error", "Failed to register employer.", "error");
+    }
+  };
+
   return (
     <>
       <div className="page-wrapper">
@@ -201,6 +317,7 @@ const EmployerRegister = () => {
           <ul className="emp-register-intro">
             <li>
               <h3>Create Recruiter Profile</h3>
+              <br></br>
             </li>
             <li>
               <p>
@@ -211,6 +328,7 @@ const EmployerRegister = () => {
               </p>
             </li>
           </ul>
+
           <ul className="emp-register-ul">
             {/* emp-li-1 */}
             <li className="emp-li-1">
@@ -219,23 +337,28 @@ const EmployerRegister = () => {
                 <br />
                 <ul style={{ marginBottom: "2.5%" }}>
                   <li>
-                    <div className="profile-box" id="profile-box">
-                      <i className="fas fa-user user-icon" id="user-icon" />
-                      <div
-                        className="edit-icon"
-                        onClick={() =>
-                          document.getElementById("file-input").click()
-                        }
-                      >
-                        <i className="fas fa-edit" />
+                    <div className="profile-box" id="profile-input">
+                      {/* <i class="fas fa-user user-icon" id="user-icon"></i> */}
+                      <div className="profile-box" id="profile-box">
+                        <i className="fas fa-user user-icon" id="user-icon"></i>
+
+                        <div
+                          className="edit-icon"
+                          onClick={() =>
+                            document.getElementById("file-input").click()
+                          }
+                        >
+                          <i className="fas fa-edit"></i>
+                        </div>
+
+                        <input
+                          type="file"
+                          id="file-input"
+                          accept="image/*"
+                          onChange={handleFileChange} // Calls function to upload image
+                          style={{ display: "none" }}
+                        />
                       </div>
-                      <input
-                        type="file"
-                        id="file-input"
-                        accept="image/*"
-                        onChange={handleFileChange}
-                        style={{ display: "none" }}
-                      />
                     </div>
                   </li>
                   <li>
@@ -263,6 +386,7 @@ const EmployerRegister = () => {
                   </li>
                 </ul>
 
+                {/* Email Address */}
                 <label>
                   Email Address <span id="star">*</span>
                 </label>
@@ -275,26 +399,41 @@ const EmployerRegister = () => {
                   required
                 />
 
+                {/* Password Field */}
+                <label>
+                  Password <span id="star">*</span>
+                </label>
+                <input
+                  className="fn"
+                  type="password"
+                  name="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+
+                {/* Mobile Number */}
                 <label>
                   Mobile Number <span id="star">*</span>
                 </label>
                 <input
                   className="fn"
-                  type="number"
-                  name="mobile"
-                  value={formData.mobile}
+                  type="text"
+                  name="mobileNumber"
+                  value={formData.mobileNumber}
                   onChange={handleChange}
                   required
                 />
 
+                {/* Current Location */}
                 <label htmlFor="current-location">
                   Current Location: <span id="star">*</span>
                 </label>
                 <select
                   id="current-location"
-                  name="location"
+                  name="currentLocation"
                   className="fn"
-                  value={formData.location}
+                  value={formData.currentLocation}
                   onChange={handleChange}
                   required
                 >
@@ -307,12 +446,15 @@ const EmployerRegister = () => {
                   <option value="Karnataka">Karnataka</option>
                   {/* Add remaining states as needed */}
                 </select>
+
+                {/* Achievements */}
                 <div id="achievement-container">
                   <br />
                   <h5 style={{ fontWeight: 600 }}>Achievements</h5>
                   <br />
                   {formData.achievements.map((achievement, index) => (
                     <div key={index} className="achievement-entry">
+                      {/* Achievement Description */}
                       <label htmlFor={`description-${index}`}>
                         Description:
                       </label>
@@ -323,17 +465,13 @@ const EmployerRegister = () => {
                           maxLength={250}
                           className="textarea-desc"
                           value={achievement.description}
-                          onChange={(e) => {
-                            const updatedAchievements = [
-                              ...formData.achievements,
-                            ];
-                            updatedAchievements[index].description =
-                              e.target.value;
-                            setFormData({
-                              ...formData,
-                              achievements: updatedAchievements,
-                            });
-                          }}
+                          onChange={(e) =>
+                            handleAchievementChange(
+                              index,
+                              "description",
+                              e.target.value
+                            )
+                          }
                         />
                         <span className="char-count">
                           {250 - achievement.description.length} characters
@@ -344,19 +482,16 @@ const EmployerRegister = () => {
                       {/* Year of Achievement */}
                       <label>Year of Achievement:</label>
                       <select
-                        name="year"
+                        name="yearOfAchievement"
                         className="year-select fn"
-                        value={achievement.year}
-                        onChange={(e) => {
-                          const updatedAchievements = [
-                            ...formData.achievements,
-                          ];
-                          updatedAchievements[index].year = e.target.value;
-                          setFormData({
-                            ...formData,
-                            achievements: updatedAchievements,
-                          });
-                        }}
+                        value={achievement.yearOfAchievement}
+                        onChange={(e) =>
+                          handleAchievementChange(
+                            index,
+                            "yearOfAchievement",
+                            e.target.value
+                          )
+                        }
                         required
                       >
                         <option value="" disabled>
@@ -372,18 +507,19 @@ const EmployerRegister = () => {
                       </select>
                     </div>
                   ))}
-
-                  {/* Add More Button */}
-                  <button
-                    type="button"
-                    className="add-btn"
-                    onClick={addMoreAchievements}
-                  >
-                    <i className="fa-solid fa-plus" /> Add More
-                  </button>
                 </div>
+
+                {/* Add More Achievements Button */}
+                <button
+                  type="button"
+                  className="add-btn"
+                  onClick={addMoreAchievements}
+                >
+                  <i className="fa-solid fa-plus" /> Add More
+                </button>
               </form>
             </li>
+
             {/* emp-li-2 */}
             <li className="emp-li-2">
               <form className="emp-form-right">
@@ -399,8 +535,8 @@ const EmployerRegister = () => {
                     <input
                       className="fn"
                       type="text"
-                      name="company"
-                      value={formData.company}
+                      name="professionalDetails.currentCompanyName"
+                      value={formData.professionalDetails.currentCompanyName}
                       onChange={handleChange}
                       required
                     />
@@ -413,8 +549,8 @@ const EmployerRegister = () => {
                     <input
                       className="fn"
                       type="text"
-                      name="designation"
-                      value={formData.designation}
+                      name="professionalDetails.currentDesignation"
+                      value={formData.professionalDetails.currentDesignation}
                       onChange={handleChange}
                       required
                     />
@@ -426,8 +562,8 @@ const EmployerRegister = () => {
                     </label>
                     <select
                       className="fn"
-                      name="fromYear"
-                      value={formData.fromYear}
+                      name="professionalDetails.fromYear"
+                      value={formData.professionalDetails.fromYear}
                       onChange={handleChange}
                       required
                     >
@@ -450,8 +586,8 @@ const EmployerRegister = () => {
                     </label>
                     <select
                       className="fn"
-                      name="toYear"
-                      value={formData.toYear}
+                      name="professionalDetails.toYear"
+                      value={formData.professionalDetails.toYear}
                       onChange={handleChange}
                       required
                     >
@@ -480,8 +616,8 @@ const EmployerRegister = () => {
                     <input
                       type="text"
                       className="fn"
-                      name="address1"
-                      value={formData.address1}
+                      name="companyAddress.address1"
+                      value={formData.companyAddress.address1}
                       onChange={handleChange}
                       required
                     />
@@ -491,8 +627,8 @@ const EmployerRegister = () => {
                     <input
                       type="text"
                       className="fn"
-                      name="address2"
-                      value={formData.address2}
+                      name="companyAddress.address2"
+                      value={formData.companyAddress.address2}
                       onChange={handleChange}
                     />
                   </li>
@@ -507,8 +643,8 @@ const EmployerRegister = () => {
                     <input
                       type="text"
                       className="fn"
-                      name="city"
-                      value={formData.city}
+                      name="companyAddress.city"
+                      value={formData.companyAddress.city}
                       onChange={handleChange}
                       required
                     />
@@ -520,8 +656,8 @@ const EmployerRegister = () => {
                     <input
                       type="text"
                       className="fn"
-                      name="state"
-                      value={formData.state}
+                      name="companyAddress.state"
+                      value={formData.companyAddress.state}
                       onChange={handleChange}
                       required
                     />
@@ -533,8 +669,8 @@ const EmployerRegister = () => {
                     <input
                       type="text"
                       className="fn"
-                      name="country"
-                      value={formData.country}
+                      name="companyAddress.country"
+                      value={formData.companyAddress.country}
                       onChange={handleChange}
                       required
                     />
@@ -546,8 +682,8 @@ const EmployerRegister = () => {
                     <input
                       type="text"
                       className="fn"
-                      name="zipcode"
-                      value={formData.zipcode}
+                      name="companyAddress.zipCode"
+                      value={formData.companyAddress.zipCode}
                       onChange={handleChange}
                       required
                     />

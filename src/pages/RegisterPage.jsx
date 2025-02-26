@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import Swal from "sweetalert2"; // Import SweetAlert2 for alerts
 
 const RegisterPage = () => {
   const [formData, setFormData] = useState({
     email: "",
-    phone: "",
+    phoneNumber: "",
     password: "",
-    name: "",
+    fullName: "",
     gender: "",
-    dob: "",
-    college: "",
-    year: "",
-    resume: null,
+    dateOfBirth: "",
+    collegeName: "",
+    yearOfStudying: "",
+    resume: null, // Will hold the uploaded file object
     skills: [""],
-    projects: [{ name: "", link: "" }],
+    projects: [{ projectName: "", projectLink: "" }],
   });
 
   const handlePrevious = () => {
@@ -24,7 +25,6 @@ const RegisterPage = () => {
   const handleChangePass = (e) => {
     const { value } = e.target;
 
-    // Password validation regex
     const passwordRegex =
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
 
@@ -37,7 +37,7 @@ const RegisterPage = () => {
           "Password must be at least 6 characters long, include one uppercase letter, one lowercase letter, one number, and one special character.",
       });
     } else {
-      setErrors({ ...errors, password: "Strong Password ✅" }); // Show success message
+      setErrors({ ...errors, password: "Strong Password ✅" });
     }
 
     setFormData({
@@ -49,15 +49,20 @@ const RegisterPage = () => {
   const addProject = () => {
     setFormData({
       ...formData,
-      projects: [...formData.projects, { name: "", link: "" }],
+      projects: [...formData.projects, { projectName: "", projectLink: "" }],
     });
   };
 
   const handleProjectChange = (index, field, value) => {
     const updatedProjects = [...formData.projects];
+
+    if (field === "name") field = "projectName";
+    if (field === "link") field = "projectLink";
+
     updatedProjects[index][field] = value;
     setFormData({ ...formData, projects: updatedProjects });
   };
+
   const addSkill = () => {
     setFormData({ ...formData, skills: [...formData.skills, ""] });
   };
@@ -68,24 +73,30 @@ const RegisterPage = () => {
     setFormData({ ...formData, skills: updatedSkills });
   };
 
-  const [step, setStep] = useState(1); // Tracks the current step
+  const [step, setStep] = useState(1);
 
-  const [errors, setErrors] = useState({}); // Stores form validation errors
+  const [errors, setErrors] = useState({});
   const validateFields = () => {
     let newErrors = {};
+
     if (step === 1) {
       if (!formData.email) newErrors.email = "Email is required";
-      if (!formData.phone) newErrors.phone = "Phone number is required";
+      if (!formData.phoneNumber)
+        newErrors.phoneNumber = "Phone number is required"; // ✅ Fixed Key
       if (!formData.password) newErrors.password = "Password is required";
     } else if (step === 2) {
-      if (!formData.name) newErrors.name = "Full name is required";
+      if (!formData.fullName) newErrors.fullName = "Full name is required"; // ✅ Fixed Key
       if (!formData.gender) newErrors.gender = "Gender is required";
-      if (!formData.dob) newErrors.dob = "Date of birth is required";
+      if (!formData.dateOfBirth)
+        newErrors.dateOfBirth = "Date of birth is required"; // ✅ Fixed Key
     } else if (step === 3) {
-      if (!formData.college) newErrors.college = "College name is required";
-      if (!formData.year) newErrors.year = "Year of studying is required";
+      if (!formData.collegeName)
+        newErrors.collegeName = "College name is required"; // ✅ Fixed Key
+      if (!formData.yearOfStudying)
+        newErrors.yearOfStudying = "Year of studying is required"; // ✅ Fixed Key
       if (!formData.resume) newErrors.resume = "Resume upload is required";
     }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -109,6 +120,76 @@ const RegisterPage = () => {
       ...formData,
       [e.target.name]: e.target.value, // Updates the specific field
     });
+  };
+
+  const handleResumeUpload = async (e) => {
+    const file = e.target.files[0]; // Get the selected file
+
+    if (!file) {
+      Swal.fire("Error", "Please select a file to upload.", "error");
+      return;
+    }
+
+    const formDataToSend = new FormData();
+    formDataToSend.append("resume", file); // Append file to FormData
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/candidate/upload",
+        formDataToSend,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+
+      console.log("Resume Upload Response:", response.data); // Debugging line
+
+      if (response.status === 200 && response.data.filePath) {
+        setFormData((prevState) => ({
+          ...prevState,
+          resume: response.data.filePath, // Store the uploaded file path
+        }));
+
+        Swal.fire("Success", "Resume uploaded successfully!", "success");
+      } else {
+        Swal.fire("Error", "Unexpected response from server.", "error");
+      }
+    } catch (error) {
+      console.error("Resume upload failed:", error);
+      Swal.fire("Error", "Failed to upload resume.", "error");
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log(formData);
+
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/api/candidate/register",
+        formData
+      );
+
+      if (response.status === 200) {
+        Swal.fire("Success", "Registration successful!", "success");
+        setFormData({
+          email: "",
+          phone: "",
+          password: "",
+          fullName: "",
+          gender: "",
+          dob: "",
+          collegeName: "",
+          yearOfStudying: "",
+          resume: null,
+          skills: [""],
+          projects: [{ projectName: "", projectLink: "" }],
+        });
+      }
+    } catch (error) {
+      console.error("Registration failed:", error);
+      Swal.fire("Error", "Failed to register candidate.", "error");
+    }
   };
 
   return (
@@ -323,12 +404,11 @@ const RegisterPage = () => {
                       <div className="form-group">
                         <label>Phone Number</label>
                         <input
-                          type="number"
-                          name="phone"
-                          placeholder="Enter your phone number"
-                          value={formData.phone}
+                          type="text"
+                          name="phoneNumber"
+                          placeholder="Enter your PhoneNumber"
+                          value={formData.phoneNumber}
                           onChange={handleChange}
-                          required
                         />
                       </div>
 
@@ -369,14 +449,11 @@ const RegisterPage = () => {
                         <label htmlFor="name">Full Name</label>
                         <input
                           type="text"
+                          name="fullName"
                           id="name"
-                          name="name"
                           placeholder="Enter your full name"
-                          value={formData.name} // Controlled input
-                          onChange={(e) =>
-                            setFormData({ ...formData, name: e.target.value })
-                          } // Update state
-                          required
+                          value={formData.fullName}
+                          onChange={handleChange}
                         />
                       </div>
 
@@ -406,13 +483,10 @@ const RegisterPage = () => {
                         <label htmlFor="dob">Date of Birth</label>
                         <input
                           type="date"
-                          id="dob"
-                          name="dob"
-                          value={formData.dob} // Controlled input
-                          onChange={(e) =>
-                            setFormData({ ...formData, dob: e.target.value })
-                          } // Update state
-                          required
+                          name="dateOfBirth"
+                          if="dob"
+                          value={formData.dateOfBirth}
+                          onChange={handleChange}
                         />
                       </div>
 
@@ -435,17 +509,11 @@ const RegisterPage = () => {
                         <label htmlFor="college">College Name</label>
                         <input
                           type="text"
+                          name="collegeName"
                           id="college"
-                          name="college"
                           placeholder="Enter your college name"
-                          value={formData.college} // Controlled input
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              college: e.target.value,
-                            })
-                          } // Update state
-                          required
+                          value={formData.collegeName}
+                          onChange={handleChange}
                         />
                       </div>
 
@@ -454,11 +522,14 @@ const RegisterPage = () => {
                         <label htmlFor="year">Year of Studying</label>
                         <select
                           id="year"
-                          name="year"
-                          value={formData.year} // Controlled input
+                          name="yearOfStudying" // Name should match state field
+                          value={formData.yearOfStudying} // Controlled input
                           onChange={(e) =>
-                            setFormData({ ...formData, year: e.target.value })
-                          } // Update state
+                            setFormData({
+                              ...formData,
+                              yearOfStudying: e.target.value,
+                            })
+                          } // Update state correctly
                           required
                         >
                           <option value="" disabled>
@@ -479,12 +550,7 @@ const RegisterPage = () => {
                           type="file"
                           name="resume"
                           accept=".pdf,.doc,.docx"
-                          onChange={(e) =>
-                            setFormData({
-                              ...formData,
-                              resume: e.target.files[0],
-                            })
-                          } // Handle file selection
+                          onChange={handleResumeUpload} // Call the function
                           required
                         />
                       </div>
@@ -535,9 +601,9 @@ const RegisterPage = () => {
                             <div key={index} className="project-item">
                               <input
                                 type="text"
-                                name={`projects[${index}].name`}
+                                name={`projects[${index}].projectName`}
                                 placeholder="Project Name"
-                                value={project.name}
+                                value={project.projectName}
                                 onChange={(e) =>
                                   handleProjectChange(
                                     index,
@@ -549,9 +615,9 @@ const RegisterPage = () => {
                               />
                               <input
                                 type="url"
-                                name={`projects[${index}].link`}
+                                name={`projects[${index}].projectLink`}
                                 placeholder="Project Link"
-                                value={project.link}
+                                value={project.projectLink}
                                 onChange={(e) =>
                                   handleProjectChange(
                                     index,
@@ -579,13 +645,20 @@ const RegisterPage = () => {
                         >
                           Previous
                         </button>
-                        <button type="submit">Register</button>
+                        <button type="submit" onClick={handleSubmit}>
+                          Register
+                        </button>
                       </div>
                     </div>
                   )}
                   {/* Navigation Buttons */}
                   <div className="form-group">
-                    <button type="button" id="next-btn" onClick={handleNext}>
+                    <button
+                      type="button"
+                      id="next-btn"
+                      style={{ marginTop: "30px" }}
+                      onClick={handleNext}
+                    >
                       Next
                     </button>
                   </div>
