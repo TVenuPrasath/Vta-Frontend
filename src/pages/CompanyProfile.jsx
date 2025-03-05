@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 
 const CompanyProfile = () => {
   const navigate = useNavigate();
-  // State Management
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [aboutCompany, setAboutCompany] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);

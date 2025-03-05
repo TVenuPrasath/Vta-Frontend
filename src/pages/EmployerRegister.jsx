@@ -88,10 +88,9 @@ const EmployerRegister = () => {
       return;
     }
 
-    // 🔹 Store the selected image in state without sending it to an API
     setFormData((prevData) => ({
       ...prevData,
-      profilePicture: file, // Store file object directly
+      profilePicture: file,
     }));
 
     Swal.fire("Success", "Profile picture selected successfully!", "success");
@@ -116,7 +115,6 @@ const EmployerRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // 🔹 Get companyId from localStorage
     const companyId = localStorage.getItem("companyId");
 
     if (!companyId) {
@@ -128,12 +126,10 @@ const EmployerRegister = () => {
       return;
     }
 
-    // 🔹 Create FormData object
     const formDataToSend = new FormData();
     formDataToSend.append("email", formData.email);
     formDataToSend.append("password", formData.password);
 
-    // 🔹 Check for profile picture selection
     if (formData.profilePicture) {
       formDataToSend.append("profilePicture", formData.profilePicture);
     } else {
@@ -151,13 +147,12 @@ const EmployerRegister = () => {
       if (response.status === 200) {
         Swal.fire("Success", "Recruiter added successfully!", "success");
 
-        // 🔹 Reset form fields after successful submission
         setFormData({
           firstName: "",
           lastName: "",
           email: "",
           password: "",
-          profilePicture: null, // Reset file
+          profilePicture: null,
         });
       }
     } catch (error) {
