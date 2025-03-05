@@ -8022,7 +8022,7 @@ Job Detail Section
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-  background-size: cover; */
+  background-size: cover; 
   padding: 80px 0 70px;
 }
 .job-detail-section.at-jsv7 .upper-box,
@@ -8746,6 +8746,7 @@ Login Popup
   background: #fff;
   border-radius: 8px;
   box-shadow: none;
+
 }
 
 #login-modal .social-btn-two {
@@ -8877,6 +8878,7 @@ Login Popup
 
 #login-modal .login-form h3 {
   text-align: center;
+
 }
 
 .modal a.close-modal {

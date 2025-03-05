@@ -80,44 +80,21 @@ const EmployerRegister = () => {
     }
   };
 
-  const handleFileChange = async (e) => {
-    const file = e.target.files[0]; // Get the selected file
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+
     if (!file) {
       Swal.fire("Error", "Please select an image file.", "error");
       return;
     }
 
-    const formData = new FormData();
-    formData.append("profilePicture", file);
+    // 🔹 Store the selected image in state without sending it to an API
+    setFormData((prevData) => ({
+      ...prevData,
+      profilePicture: file, // Store file object directly
+    }));
 
-    try {
-      const response = await axios.post(
-        "http://localhost:4000/api/employer/upload",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
-
-      if (response.status === 200 && response.data.filePath) {
-        // Update formData with the uploaded file path
-        setFormData((prevData) => ({
-          ...prevData,
-          profilePicture: response.data.filePath, // Save the file path
-        }));
-
-        Swal.fire(
-          "Success",
-          "Profile picture uploaded successfully!",
-          "success"
-        );
-      } else {
-        Swal.fire("Error", "Failed to upload profile picture.", "error");
-      }
-    } catch (error) {
-      console.error("Profile picture upload failed:", error);
-      Swal.fire("Error", "Something went wrong. Try again!", "error");
-    }
+    Swal.fire("Success", "Profile picture selected successfully!", "success");
   };
 
   const addMoreAchievements = () => {
@@ -138,52 +115,54 @@ const EmployerRegister = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData);
+
+    // 🔹 Get companyId from localStorage
+    const companyId = localStorage.getItem("companyId");
+
+    if (!companyId) {
+      Swal.fire(
+        "Error",
+        "Company ID not found! Register a company first.",
+        "error"
+      );
+      return;
+    }
+
+    // 🔹 Create FormData object
+    const formDataToSend = new FormData();
+    formDataToSend.append("email", formData.email);
+    formDataToSend.append("password", formData.password);
+
+    // 🔹 Check for profile picture selection
+    if (formData.profilePicture) {
+      formDataToSend.append("profilePicture", formData.profilePicture);
+    } else {
+      Swal.fire("Error", "Please select a profile image!", "error");
+      return;
+    }
+
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/employer/register",
-        formData // profilePicture path is included here
+        `http://localhost:4000/api/company/${companyId}/recruiter`,
+        formDataToSend,
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
 
       if (response.status === 200) {
-        Swal.fire("Success", "Employer registered successfully!", "success");
+        Swal.fire("Success", "Recruiter added successfully!", "success");
 
-        // Reset form after successful registration
+        // 🔹 Reset form fields after successful submission
         setFormData({
           firstName: "",
           lastName: "",
           email: "",
           password: "",
-          profilePicture: null, // Reset profile picture
-          mobileNumber: "",
-          currentLocation: "",
-          achievements: [{ description: "", yearOfAchievement: "" }],
-          professionalDetails: {
-            currentCompanyName: "",
-            currentDesignation: "",
-            fromYear: "",
-            toYear: "",
-          },
-          companyAddress: {
-            address1: "",
-            address2: "",
-            city: "",
-            state: "",
-            country: "",
-            zipCode: "",
-          },
-          experience: "",
-          hiringLevels: [],
-          referralCode: "",
-          industryType: "",
-          function: "",
-          hiringSkills: "",
-          agreedToTerms: false,
+          profilePicture: null, // Reset file
         });
       }
     } catch (error) {
-      console.error("Registration failed:", error);
-      Swal.fire("Error", "Failed to register employer.", "error");
+      console.error("Error adding recruiter:", error);
+      Swal.fire("Error", "Failed to add recruiter.", "error");
     }
   };
 
@@ -355,7 +334,7 @@ const EmployerRegister = () => {
                           type="file"
                           id="file-input"
                           accept="image/*"
-                          onChange={handleFileChange} // Calls function to upload image
+                          onChange={handleFileChange}
                           style={{ display: "none" }}
                         />
                       </div>
@@ -414,7 +393,8 @@ const EmployerRegister = () => {
 
                 {/* Mobile Number */}
                 <label>
-                  Mobile Number <span id="star">*</span>
+                  Mobile Number
+                  {/* <span id="star">*</span> */}
                 </label>
                 <input
                   className="fn"
@@ -422,12 +402,12 @@ const EmployerRegister = () => {
                   name="mobileNumber"
                   value={formData.mobileNumber}
                   onChange={handleChange}
-                  required
                 />
 
                 {/* Current Location */}
                 <label htmlFor="current-location">
-                  Current Location: <span id="star">*</span>
+                  Current Location:
+                  {/* <span id="star">*</span> */}
                 </label>
                 <select
                   id="current-location"
@@ -435,7 +415,6 @@ const EmployerRegister = () => {
                   className="fn"
                   value={formData.currentLocation}
                   onChange={handleChange}
-                  required
                 >
                   <option value="" disabled>
                     Select your state
@@ -444,7 +423,6 @@ const EmployerRegister = () => {
                   <option value="Tamil Nadu">Tamil Nadu</option>
                   <option value="Delhi">Delhi</option>
                   <option value="Karnataka">Karnataka</option>
-                  {/* Add remaining states as needed */}
                 </select>
 
                 {/* Achievements */}
@@ -452,9 +430,8 @@ const EmployerRegister = () => {
                   <br />
                   <h5 style={{ fontWeight: 600 }}>Achievements</h5>
                   <br />
-                  {formData.achievements.map((achievement, index) => (
+                  {(formData.achievements || []).map((achievement, index) => (
                     <div key={index} className="achievement-entry">
-                      {/* Achievement Description */}
                       <label htmlFor={`description-${index}`}>
                         Description:
                       </label>
@@ -464,7 +441,7 @@ const EmployerRegister = () => {
                           name="description"
                           maxLength={250}
                           className="textarea-desc"
-                          value={achievement.description}
+                          value={achievement.description || ""}
                           onChange={(e) =>
                             handleAchievementChange(
                               index,
@@ -474,17 +451,16 @@ const EmployerRegister = () => {
                           }
                         />
                         <span className="char-count">
-                          {250 - achievement.description.length} characters
-                          remaining
+                          {250 - (achievement.description?.length || 0)}{" "}
+                          characters remaining
                         </span>
                       </div>
 
-                      {/* Year of Achievement */}
                       <label>Year of Achievement:</label>
                       <select
                         name="yearOfAchievement"
                         className="year-select fn"
-                        value={achievement.yearOfAchievement}
+                        value={achievement.yearOfAchievement || ""}
                         onChange={(e) =>
                           handleAchievementChange(
                             index,
@@ -492,7 +468,6 @@ const EmployerRegister = () => {
                             e.target.value
                           )
                         }
-                        required
                       >
                         <option value="" disabled>
                           Select Year
@@ -530,42 +505,44 @@ const EmployerRegister = () => {
                 <ul>
                   <li>
                     <label>
-                      Current Company Name <span id="star">*</span>
+                      Current Company Name
+                      {/* <span id="star">*</span> */}
                     </label>
                     <input
                       className="fn"
                       type="text"
                       name="professionalDetails.currentCompanyName"
-                      value={formData.professionalDetails.currentCompanyName}
+                      // value={
+                      //   formData.professionalDetails.currentCompanyName || ""
+                      // }
                       onChange={handleChange}
-                      required
                     />
                   </li>
 
                   <li>
                     <label>
-                      Current Designation <span id="star">*</span>
+                      Current Designation
+                      {/* <span id="star">*</span> */}
                     </label>
                     <input
                       className="fn"
                       type="text"
                       name="professionalDetails.currentDesignation"
-                      value={formData.professionalDetails.currentDesignation}
+                      // value={formData.professionalDetails.currentDesignation}
                       onChange={handleChange}
-                      required
                     />
                   </li>
 
                   <li>
                     <label>
-                      From <span id="star">*</span>
+                      From
+                      {/* <span id="star">*</span> */}
                     </label>
                     <select
                       className="fn"
                       name="professionalDetails.fromYear"
-                      value={formData.professionalDetails.fromYear}
+                      // value={formData.professionalDetails.fromYear}
                       onChange={handleChange}
-                      required
                     >
                       <option value="" disabled>
                         Select Year
@@ -582,14 +559,14 @@ const EmployerRegister = () => {
 
                   <li>
                     <label>
-                      To <span id="star">*</span>
+                      To
+                      {/* <span id="star">*</span> */}
                     </label>
                     <select
                       className="fn"
                       name="professionalDetails.toYear"
-                      value={formData.professionalDetails.toYear}
+                      // value={formData.professionalDetails.toYear}
                       onChange={handleChange}
-                      required
                     >
                       <option value="" disabled>
                         Select Year
@@ -610,16 +587,13 @@ const EmployerRegister = () => {
                 <br />
                 <ul style={{ marginBottom: "1%" }}>
                   <li>
-                    <label>
-                      Address 1 <span id="star">*</span>
-                    </label>
+                    <label>Address 1{/* <span id="star">*</span> */}</label>
                     <input
                       type="text"
                       className="fn"
                       name="companyAddress.address1"
-                      value={formData.companyAddress.address1}
+                      // value={formData.companyAddress.address1}
                       onChange={handleChange}
-                      required
                     />
                   </li>
                   <li>
@@ -628,7 +602,7 @@ const EmployerRegister = () => {
                       type="text"
                       className="fn"
                       name="companyAddress.address2"
-                      value={formData.companyAddress.address2}
+                      // value={formData.companyAddress.address2}
                       onChange={handleChange}
                     />
                   </li>
@@ -638,54 +612,54 @@ const EmployerRegister = () => {
                 <ul style={{ marginBottom: "1%" }}>
                   <li>
                     <label>
-                      City <span id="star">*</span>
+                      City
+                      {/* <span id="star">*</span> */}
                     </label>
                     <input
                       type="text"
                       className="fn"
                       name="companyAddress.city"
-                      value={formData.companyAddress.city}
+                      // value={formData.companyAddress.city}
                       onChange={handleChange}
-                      required
                     />
                   </li>
                   <li>
                     <label>
-                      State/Province/Region <span id="star">*</span>
+                      State/Province/Region
+                      {/* <span id="star">*</span> */}
                     </label>
                     <input
                       type="text"
                       className="fn"
                       name="companyAddress.state"
-                      value={formData.companyAddress.state}
+                      // value={formData.companyAddress.state}
                       onChange={handleChange}
-                      required
                     />
                   </li>
                   <li>
                     <label>
-                      Country <span id="star">*</span>
+                      Country
+                      {/* <span id="star">*</span> */}
                     </label>
                     <input
                       type="text"
                       className="fn"
                       name="companyAddress.country"
-                      value={formData.companyAddress.country}
+                      // value={formData.companyAddress.country}
                       onChange={handleChange}
-                      required
                     />
                   </li>
                   <li>
                     <label>
-                      Zipcode <span id="star">*</span>
+                      Zipcode
+                      {/* <span id="star">*</span> */}
                     </label>
                     <input
                       type="text"
                       className="fn"
                       name="companyAddress.zipCode"
-                      value={formData.companyAddress.zipCode}
+                      // value={formData.companyAddress.zipCode}
                       onChange={handleChange}
-                      required
                     />
                   </li>
                 </ul>
@@ -695,14 +669,14 @@ const EmployerRegister = () => {
                   {/* Total Experience in Hiring */}
                   <li>
                     <label>
-                      Total Experience in Hiring <span id="star">*</span>
+                      Total Experience in Hiring
+                      {/* <span id="star">*</span> */}
                     </label>
                     <select
                       className="fn"
                       name="experience"
-                      value={formData.experience}
+                      // value={formData.experience}
                       onChange={handleChange}
-                      required
                     >
                       <option value="" disabled>
                         Select
@@ -723,7 +697,8 @@ const EmployerRegister = () => {
                     {/* Select Box */}
                     <div className="select-box" onClick={toggleDropdown}>
                       <label>
-                        Level I Hire for <span id="star">*</span>
+                        Level I Hire for
+                        {/* <span id="star">*</span> */}
                       </label>
                       <select disabled>
                         <option>
@@ -756,15 +731,16 @@ const EmployerRegister = () => {
                   {/* Referral Code */}
                   <li>
                     <label>
-                      Referral Code <span id="star">*</span>
+                      Referral Code
+                      {/* <span id="star">*</span> */}
                     </label>
                     <input
                       type="text"
                       className="fn"
                       name="referralCode"
-                      value={formData.referralCode}
+                      // value={formData.referralCode}
                       onChange={handleChange}
-                      required
+                      // required
                     />
                   </li>
                 </ul>
@@ -774,14 +750,14 @@ const EmployerRegister = () => {
                   {/* Industry Type Dropdown */}
                   <li>
                     <label>
-                      Industry Type <span id="star">*</span>
+                      Industry Type
+                      {/* <span id="star">*</span> */}
                     </label>
                     <select
                       className="fn"
                       name="industryType"
-                      value={formData.industryType}
+                      // value={formData.industryType}
                       onChange={handleChange}
-                      required
                     >
                       <option value="" disabled>
                         Select
@@ -821,14 +797,14 @@ const EmployerRegister = () => {
                   {/* Function Dropdown */}
                   <li>
                     <label>
-                      Function <span id="star">*</span>
+                      Function
+                      {/* <span id="star">*</span> */}
                     </label>
                     <select
                       className="fn"
                       name="function"
-                      value={formData.function}
+                      // value={formData.function}
                       onChange={handleChange}
-                      required
                     >
                       <option value="" disabled>
                         Select
@@ -865,16 +841,16 @@ const EmployerRegister = () => {
 
                 {/* Skills I Hire For */}
                 <label>
-                  Skills I hire for <span id="star">*</span>
+                  Skills I hire for
+                  {/* <span id="star">*</span> */}
                 </label>
                 <input
                   type="text"
                   className="fn-textarea"
                   name="hiringSkills"
                   placeholder="Python, Java, React,..."
-                  value={formData.hiringSkills}
+                  // value={formData.hiringSkills}
                   onChange={handleChange}
-                  required
                 />
                 <br />
                 <br />

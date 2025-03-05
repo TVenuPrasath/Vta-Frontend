@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import Swal from "sweetalert2"; // Import SweetAlert2 for alerts
+import Swal from "sweetalert2";
 
 const RegisterPage = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     phoneNumber: "",
@@ -13,7 +14,7 @@ const RegisterPage = () => {
     dateOfBirth: "",
     collegeName: "",
     yearOfStudying: "",
-    resume: null, // Will hold the uploaded file object
+    resume: null,
     skills: [""],
     projects: [{ projectName: "", projectLink: "" }],
   });
@@ -42,7 +43,7 @@ const RegisterPage = () => {
 
     setFormData({
       ...formData,
-      password: value, // Update the password field
+      password: value,
     });
   };
 
@@ -82,18 +83,18 @@ const RegisterPage = () => {
     if (step === 1) {
       if (!formData.email) newErrors.email = "Email is required";
       if (!formData.phoneNumber)
-        newErrors.phoneNumber = "Phone number is required"; // ✅ Fixed Key
+        newErrors.phoneNumber = "Phone number is required";
       if (!formData.password) newErrors.password = "Password is required";
     } else if (step === 2) {
-      if (!formData.fullName) newErrors.fullName = "Full name is required"; // ✅ Fixed Key
+      if (!formData.fullName) newErrors.fullName = "Full name is required";
       if (!formData.gender) newErrors.gender = "Gender is required";
       if (!formData.dateOfBirth)
-        newErrors.dateOfBirth = "Date of birth is required"; // ✅ Fixed Key
+        newErrors.dateOfBirth = "Date of birth is required";
     } else if (step === 3) {
       if (!formData.collegeName)
-        newErrors.collegeName = "College name is required"; // ✅ Fixed Key
+        newErrors.collegeName = "College name is required";
       if (!formData.yearOfStudying)
-        newErrors.yearOfStudying = "Year of studying is required"; // ✅ Fixed Key
+        newErrors.yearOfStudying = "Year of studying is required";
       if (!formData.resume) newErrors.resume = "Resume upload is required";
     }
 
@@ -113,17 +114,17 @@ const RegisterPage = () => {
     }
   };
 
-  const [selectedRole, setSelectedRole] = useState("candidate"); // Default selected
+  const [selectedRole, setSelectedRole] = useState("candidate");
 
   const handleChange = (e) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value, // Updates the specific field
+      [e.target.name]: e.target.value,
     });
   };
 
   const handleResumeUpload = async (e) => {
-    const file = e.target.files[0]; // Get the selected file
+    const file = e.target.files[0];
 
     if (!file) {
       Swal.fire("Error", "Please select a file to upload.", "error");
@@ -131,7 +132,7 @@ const RegisterPage = () => {
     }
 
     const formDataToSend = new FormData();
-    formDataToSend.append("resume", file); // Append file to FormData
+    formDataToSend.append("resume", file);
 
     try {
       const response = await axios.post(
@@ -142,12 +143,12 @@ const RegisterPage = () => {
         }
       );
 
-      console.log("Resume Upload Response:", response.data); // Debugging line
+      console.log("Resume Upload Response:", response.data);
 
       if (response.status === 200 && response.data.filePath) {
         setFormData((prevState) => ({
           ...prevState,
-          resume: response.data.filePath, // Store the uploaded file path
+          resume: response.data.filePath,
         }));
 
         Swal.fire("Success", "Resume uploaded successfully!", "success");
@@ -185,6 +186,7 @@ const RegisterPage = () => {
           skills: [""],
           projects: [{ projectName: "", projectLink: "" }],
         });
+        navigate("/CandidateDashboard");
       }
     } catch (error) {
       console.error("Registration failed:", error);
@@ -373,7 +375,7 @@ const RegisterPage = () => {
                           {/* Employer Button */}
                           <div className="col-lg-6 col-md-12">
                             <Link
-                              to="/EmployerRegister" // Navigate to EmployerRegister page
+                              to="/ComapanyProfile" // Navigate to EmployerRegister page
                               className={
                                 selectedRole === "employer"
                                   ? "theme-btn candidate-button active"
@@ -438,6 +440,17 @@ const RegisterPage = () => {
                           </small>
                         )}
                       </div>
+                      {/* Navigation Buttons */}
+                      <div className="form-group">
+                        <button
+                          type="button"
+                          id="next-btn"
+                          style={{ marginTop: "30px" }}
+                          onClick={handleNext}
+                        >
+                          Next
+                        </button>
+                      </div>
                     </div>
                   )}
 
@@ -491,14 +504,32 @@ const RegisterPage = () => {
                       </div>
 
                       {/* Navigation Buttons */}
-                      <div className="form-group">
-                        <button
-                          type="button"
-                          id="prev-btn"
-                          onClick={handlePrevious}
+                      <div style={{ display: "flex" }}>
+                        <div
+                          className="form-group"
+                          style={{ paddingTop: "30px" }}
                         >
-                          Previous
-                        </button>
+                          <button
+                            type="button"
+                            id="prev-btn"
+                            onClick={handlePrevious}
+                          >
+                            Previous
+                          </button>
+                        </div>
+                        <div
+                          className="form-group"
+                          style={{ marginLeft: "auto", marginRight: 0 }}
+                        >
+                          <button
+                            type="button"
+                            id="next-btn"
+                            style={{ marginTop: "30px" }}
+                            onClick={handleNext}
+                          >
+                            Next
+                          </button>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -555,15 +586,32 @@ const RegisterPage = () => {
                         />
                       </div>
 
-                      {/* Navigation Buttons */}
-                      <div className="form-group">
-                        <button
-                          type="button"
-                          id="prev-btn"
-                          onClick={handlePrevious}
+                      <div style={{ display: "flex" }}>
+                        <div
+                          className="form-group"
+                          style={{ paddingTop: "30px" }}
                         >
-                          Previous
-                        </button>
+                          <button
+                            type="button"
+                            id="prev-btn"
+                            onClick={handlePrevious}
+                          >
+                            Previous
+                          </button>
+                        </div>
+                        <div
+                          className="form-group"
+                          style={{ marginLeft: "auto", marginRight: 0 }}
+                        >
+                          <button
+                            type="button"
+                            id="next-btn"
+                            style={{ marginTop: "30px" }}
+                            onClick={handleNext}
+                          >
+                            Next
+                          </button>
+                        </div>
                       </div>
                     </div>
                   )}
@@ -651,17 +699,6 @@ const RegisterPage = () => {
                       </div>
                     </div>
                   )}
-                  {/* Navigation Buttons */}
-                  <div className="form-group">
-                    <button
-                      type="button"
-                      id="next-btn"
-                      style={{ marginTop: "30px" }}
-                      onClick={handleNext}
-                    >
-                      Next
-                    </button>
-                  </div>
                   {/* Register Button */}
                   <div className="form-group">
                     <button

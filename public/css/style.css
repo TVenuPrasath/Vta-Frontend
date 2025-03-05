@@ -8950,11 +8950,20 @@ Login Popup
 
 #login-modal {
   max-width: 500px;
-  padding: 30px 40px 20px;
   overflow: visible;
   background: #fff;
   border-radius: 8px;
   box-shadow: none;
+}
+#forgot-password-modal {
+  max-width: 500px;
+  padding: 30px 40px 20px;
+  margin-left: 360px;
+  overflow: visible;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: none;
+  margin-top: 90px;
 }
 
 #login-modal .social-btn-two {
