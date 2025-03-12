@@ -145,11 +145,15 @@ const RegisterPage = () => {
 
       console.log("Resume Upload Response:", response.data);
 
-      if (response.status === 200 && response.data.filePath) {
+      if (response.status === 200 && response.data.data.filePath) {
         setFormData((prevState) => ({
           ...prevState,
-          resume: response.data.filePath,
+          resume: response.data.data.filePath,
         }));
+
+        localStorage.setItem("authToken", response.data.token);
+        localStorage.setItem("role", selectedRole);
+        localStorage.setItem("userId", response.data._id);
 
         Swal.fire("Success", "Resume uploaded successfully!", "success");
       } else {
@@ -286,12 +290,9 @@ const RegisterPage = () => {
               <div className="outer-box">
                 {/* Login/Register */}
                 <div className="btn-box">
-                  <a
-                    href="register.html"
-                    className="theme-btn theme-clone bdrs30"
-                  >
+                  <Link to="/" className="theme-btn theme-clone bdrs30">
                     Register
-                  </a>
+                  </Link>
                   <a
                     href="login.html"
                     className="home21-jp-btn login-btn bdrs30"
@@ -319,9 +320,10 @@ const RegisterPage = () => {
               <div className="outer-box">
                 {/* Login/Register */}
                 <div className="login-box">
-                  <a href="login-popup.html" className="call-modal">
-                    <span className="icon-user" />
-                  </a>
+                  <Link to="/Login" className="call-modal">
+                    {/* <span className="icon-user" /> */}
+                    Login
+                  </Link>
                 </div>
                 <a
                   href="#nav-mobile"
@@ -359,7 +361,8 @@ const RegisterPage = () => {
                         <div className="btn-box row">
                           {/* Candidate Button */}
                           <div className="col-lg-6 col-md-12">
-                            <a
+                            <Link
+                              to
                               href="#"
                               className={
                                 selectedRole === "candidate"
@@ -369,13 +372,12 @@ const RegisterPage = () => {
                               onClick={() => setSelectedRole("candidate")}
                             >
                               <i className="la la-user" /> Candidate
-                            </a>
+                            </Link>
                           </div>
-
                           {/* Employer Button */}
                           <div className="col-lg-6 col-md-12">
                             <Link
-                              to="/ComapanyProfile" // Navigate to EmployerRegister page
+                              to="/ComapanyProfile"
                               className={
                                 selectedRole === "employer"
                                   ? "theme-btn candidate-button active"
@@ -476,10 +478,10 @@ const RegisterPage = () => {
                         <select
                           id="gender"
                           name="gender"
-                          value={formData.gender} // Controlled input
+                          value={formData.gender}
                           onChange={(e) =>
                             setFormData({ ...formData, gender: e.target.value })
-                          } // Update state
+                          }
                           required
                         >
                           <option value="" disabled>
@@ -553,14 +555,14 @@ const RegisterPage = () => {
                         <label htmlFor="year">Year of Studying</label>
                         <select
                           id="year"
-                          name="yearOfStudying" // Name should match state field
-                          value={formData.yearOfStudying} // Controlled input
+                          name="yearOfStudying"
+                          value={formData.yearOfStudying}
                           onChange={(e) =>
                             setFormData({
                               ...formData,
                               yearOfStudying: e.target.value,
                             })
-                          } // Update state correctly
+                          }
                           required
                         >
                           <option value="" disabled>
@@ -581,7 +583,7 @@ const RegisterPage = () => {
                           type="file"
                           name="resume"
                           accept=".pdf,.doc,.docx"
-                          onChange={handleResumeUpload} // Call the function
+                          onChange={handleResumeUpload}
                           required
                         />
                       </div>

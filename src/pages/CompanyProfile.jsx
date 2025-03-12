@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import Swal from "sweetalert2";
 
@@ -104,8 +104,9 @@ const CompanyProfile = () => {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-      localStorage.setItem("companyId", response.data.data._id);
-      console.log("Company ID stored:", response.data.data._id);
+      localStorage.setItem("authToken", response.data.data.token);
+      localStorage.setItem("role", "company_admin");
+      localStorage.setItem("userId", response.data.data._id);
       Swal.fire("Success", "Employer registered successfully!", "success");
       navigate("/companydashboard");
     } catch (error) {
@@ -199,9 +200,9 @@ const CompanyProfile = () => {
               <div className="outer-box">
                 {/* Login/Register */}
                 <div className="login-box">
-                  <a href="login-popup.html" className="call-modal">
+                  <Link to="/Login" className="call-modal">
                     <span className="icon-user" />
-                  </a>
+                  </Link>
                 </div>
                 <button id="toggle-user-sidebar">
                   <img
@@ -322,6 +323,10 @@ const CompanyProfile = () => {
                       <h4>My Profile</h4>
                     </div>
                     <div className="widget-content">
+                      <div className="text" style={{ color: "black" }}>
+                        Max file size is 1MB, Minimum dimension: 330x300 And
+                        Suitable files are .jpg &amp; .png
+                      </div>
                       <div className="uploading-outer">
                         <div className="uploadButton">
                           <input
@@ -344,12 +349,12 @@ const CompanyProfile = () => {
                               : "No file selected"}
                           </span>
                         </div>
-
-                        <div className="text" style={{ color: "black" }}>
-                          Max file size is 1MB, Minimum dimension: 330x300 And
-                          Suitable files are .jpg &amp; .png
-                        </div>
                       </div>
+                      <div className="text" style={{ color: "black" }}>
+                        Max file size is 1MB, Minimum dimension: 330x300 And
+                        Suitable files are .jpg &amp; .png
+                      </div>
+
                       <div className="uploading-outer">
                         <div className="uploadButton">
                           <input
@@ -371,10 +376,10 @@ const CompanyProfile = () => {
                               ? selectedCover.name
                               : "No file selected"}
                           </span>
-                        </div>
-                        <div className="text" style={{ color: "black" }}>
-                          Max file size is 1MB, Minimum dimension: 330x300 And
-                          Suitable files are .jpg &amp; .png
+                          {/* <div className="text" style={{ color: "black" }}>
+                            Max file size is 1MB, Minimum dimension: 330x300 And
+                            Suitable files are .jpg &amp; .png
+                          </div> */}
                         </div>
                       </div>
                       <form className="default-form">
@@ -439,7 +444,7 @@ const CompanyProfile = () => {
                             <label>Est. Since</label>
                             <br></br>
                             <input
-                              type="date" // Changed to 'date' for better validation
+                              type="date"
                               name="establishedSince"
                               placeholder="06.04.2015"
                               value={formData.establishedSince}

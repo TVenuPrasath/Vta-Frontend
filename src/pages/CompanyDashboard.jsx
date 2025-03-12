@@ -1,7 +1,16 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
+import TemporaryDrawer from "./SideBar";
 
 const CompanyDashboard = () => {
+  const userRole = localStorage.getItem("role");
+
+  const handleLogout = () => {
+    localStorage.removeItem("companyId");
+
+    // Swal.fire("Success", "Logged out successfully!", "success");
+  };
+
   return (
     <div className="page-wrapper dashboard ">
       {/* Preloader */}
@@ -85,7 +94,7 @@ const CompanyDashboard = () => {
             <div className="outer-box">
               {/* Login/Register */}
               <div className="login-box">
-                <a href="login-popup.html" className="call-modal">
+                <a href="/Login" className="call-modal" onClick={handleLogout}>
                   <span className="icon-user" />
                 </a>
               </div>
@@ -96,6 +105,7 @@ const CompanyDashboard = () => {
                   className="thumb"
                 />
               </button>
+              <TemporaryDrawer />
             </div>
           </div>
         </div>
@@ -122,10 +132,10 @@ const CompanyDashboard = () => {
               </a>
             </li>
             <li>
-              <a href="dashboard-post-job.html">
+              <Link to="/PostJob">
                 <i className="la la-paper-plane" />
                 Post a New Job
-              </a>
+              </Link>
             </li>
             <li>
               <a href="dashboard-manage-job.html">
@@ -195,12 +205,12 @@ const CompanyDashboard = () => {
         <section className="boxes-section" style={{ padding: "0%" }}>
           <a href="dashboard-post-job.html"></a>
           <div className="box pastel-blue">
-            <a href="dashboard-post-job.html">
+            <Link to="/PostJob">
               <div className="flash box-content">
                 <img src="images/icons/post_add.png" />
                 <h3>Post a Job</h3>
               </div>
-            </a>
+            </Link>
             <div className="shapes">
               {/* Add shapes in the background */}
               <div className="shape circle" />
@@ -236,17 +246,22 @@ const CompanyDashboard = () => {
             </div>
           </div>
           <a href="pricing.html"></a>
-          <div className="box pastel-green">
-            <a href="EmployerRegister">
-              <div className="box-content">
-                <img src="images/icons/person_search.png" />
-                <h3>Add Recruiter</h3>
-              </div>
-            </a>
-            <div className="shapes">
-              <div className="shape circle" />
-              <div className="shape hexagon" />
+          {userRole === "company_admin" && (
+            <div className="box pastel-green">
+              <a href="EmployerRegister">
+                <div className="box-content">
+                  <img
+                    src="images/icons/person_search.png"
+                    alt="Add Recruiter"
+                  />
+                  <h3>Add Recruiter</h3>
+                </div>
+              </a>
             </div>
+          )}
+          <div className="shapes">
+            <div className="shape circle" />
+            <div className="shape hexagon" />
           </div>
         </section>
         {/* Dashboard */}
@@ -258,12 +273,12 @@ const CompanyDashboard = () => {
                   <div className="left">
                     <i className="icon flaticon-briefcase" />
                   </div>
-                  <a href="dashboard-manage-job.html">
+                  <Link to="/ManageJobs">
                     <div className="right">
                       <h4>22</h4>
                       <p>Posted Jobs</p>
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
               <div className="ui-block col-xl-3 col-lg-6 col-md-6 col-sm-12">

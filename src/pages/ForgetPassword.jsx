@@ -31,7 +31,7 @@ const ForgetPassword = () => {
           "Password reset link sent to your email!",
           "success"
         );
-        setStep(2); // Move to next step (New Password Input)
+        setStep(2);
       }
     } catch (error) {
       console.error(
@@ -79,7 +79,7 @@ const ForgetPassword = () => {
           "Password reset successful! You can now log in.",
           "success"
         );
-        window.location.href = "/login"; // Redirect to login page
+        window.location.href = "/login";
       }
     } catch (error) {
       console.error(
@@ -101,75 +101,44 @@ const ForgetPassword = () => {
       <div id="forgot-password-modal">
         <div className="login-form default-form">
           <div className="form-inner">
-            {step === 1 ? (
-              <>
-                <h3>Forgot Password</h3>
-                <form>
-                  <div className="form-group">
-                    <label>Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      placeholder="Enter your email"
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <label>Select Role</label>
-                    <select
-                      name="role"
-                      className="chosen-select"
-                      value={role}
-                      onChange={(e) => setRole(e.target.value)}
-                      required
-                    >
-                      <option value="">Select Role</option>
-                      <option value="employer">Employer</option>
-                      <option value="candidate">Candidate</option>
-                    </select>
-                  </div>
-                  <div className="form-group">
-                    <button
-                      className="theme-btn btn-style-one"
-                      type="submit"
-                      onClick={handleForgotPassword}
-                      disabled={loading}
-                    >
-                      {loading ? "Processing..." : "Reset Password"}
-                    </button>
-                  </div>
-                </form>
-              </>
-            ) : (
-              <>
-                <h3>Enter New Password</h3>
-                <form>
-                  <div className="form-group">
-                    <label>New Password</label>
-                    <input
-                      type="password"
-                      name="newPassword"
-                      value={newPassword}
-                      onChange={(e) => setNewPassword(e.target.value)}
-                      placeholder="Enter new password"
-                      required
-                    />
-                  </div>
-                  <div className="form-group">
-                    <button
-                      className="theme-btn btn-style-one"
-                      type="submit"
-                      onClick={handleResetPassword}
-                      disabled={loading}
-                    >
-                      {loading ? "Resetting..." : "Submit New Password"}
-                    </button>
-                  </div>
-                </form>
-              </>
-            )}
+            <h3>Forgot Password</h3>
+            <form>
+              <div className="form-group">
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Enter your email"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Select Role</label>
+                <select
+                  name="role"
+                  className="chosen-select"
+                  value={role}
+                  onChange={(e) => setRole(e.target.value)}
+                  required
+                >
+                  <option value="">Select Role</option>
+                  <option value="employer">Employer</option>
+                  <option value="candidate">Candidate</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <button
+                  className="theme-btn btn-style-one"
+                  type="submit"
+                  onClick={handleForgotPassword}
+                  disabled={loading}
+                >
+                  {loading ? "Processing..." : "Reset Password"}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

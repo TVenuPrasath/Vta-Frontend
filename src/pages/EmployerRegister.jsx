@@ -1,9 +1,10 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const EmployerRegister = () => {
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -115,7 +116,7 @@ const EmployerRegister = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const companyId = localStorage.getItem("companyId");
+    const companyId = localStorage.getItem("userId");
 
     if (!companyId) {
       Swal.fire(
@@ -138,6 +139,7 @@ const EmployerRegister = () => {
     }
 
     try {
+      console.log("Sending recruiter data:", formDataToSend);
       const response = await axios.post(
         `http://localhost:4000/api/company/${companyId}/recruiter`,
         formDataToSend,
@@ -154,6 +156,7 @@ const EmployerRegister = () => {
           password: "",
           profilePicture: null,
         });
+        navigate("/companydashboard");
       }
     } catch (error) {
       console.error("Error adding recruiter:", error);
@@ -269,9 +272,9 @@ const EmployerRegister = () => {
               <div className="outer-box">
                 {/* Login/Register */}
                 <div className="login-box">
-                  <a href="login-popup.html" className="call-modal">
+                  <Link to="/Login" className="call-modal">
                     <span className="icon-user" />
-                  </a>
+                  </Link>
                 </div>
                 <a
                   href="#nav-mobile"

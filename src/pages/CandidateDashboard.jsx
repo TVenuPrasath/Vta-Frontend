@@ -344,7 +344,7 @@ const CandidateDashboard = () => {
             <div className="box pastel-pink">
               <div className="box-content">
                 <i className="fa-solid fa-magnifying-glass" id="box-icon-2" />
-                <a href="jobs.html">
+                <a href="jobs">
                   <h3>Discover Openings</h3>
                 </a>
               </div>

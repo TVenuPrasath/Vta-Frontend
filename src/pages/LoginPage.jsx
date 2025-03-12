@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const Login = () => {
@@ -10,7 +10,7 @@ const Login = () => {
     rememberMe: false,
   });
   const [selectedRole, setSelectedRole] = useState("candidate");
-  const navigate = useNavigate(); // React Router navigation
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -22,18 +22,36 @@ const Login = () => {
 
   const handleLogin = async (e) => {
     e.preventDefault();
+
+    if (!formData.email || !formData.password) {
+      Swal.fire("Error", "Email and password are required!", "error");
+      return;
+    }
+
+    console.log("selectedRole:", selectedRole);
     const loginUrl =
       selectedRole === "candidate"
         ? "http://localhost:4000/api/candidate/login"
-        : "http://localhost:4000/api/employer/login";
+        : "http://localhost:4000/api/company/login";
 
     try {
+      // console.log("loginUrl:", loginUrl);
+      // console.log("Sending login request with:", formData);
       const response = await axios.post(loginUrl, formData);
-      console.log(response);
+      console.log("Login Response:", response.data);
+
       if (response.status === 200) {
-        localStorage.setItem("authToken", response.data.token);
+        localStorage.setItem("authToken", response.data.data.token);
+        localStorage.setItem("role", response.data.data.role);
+        localStorage.setItem("userId", response.data.data._id);
+
         Swal.fire("Success", "Login successful!", "success");
-        // navigate("/dashboard");
+
+        if (selectedRole === "candidate") {
+          navigate("/CandidateDashboard");
+        } else {
+          navigate("/CompanyDashboard");
+        }
       } else {
         Swal.fire("Error", "Invalid credentials. Please try again.", "error");
       }
@@ -46,6 +64,7 @@ const Login = () => {
       );
     }
   };
+
   const loginWithGoogle = () => {
     window.open(
       `http://localhost:4000/auth/google?role=${selectedRole}`,
@@ -124,11 +143,19 @@ const Login = () => {
                 <div
                   style={{
                     display: "flex",
+                    flexDirection: "row",
                     justifyContent: "center",
                     gap: "70px",
                   }}
                 >
-                  <div className="toggle-buttons">
+                  <div
+                    className="toggle-buttons"
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignContent: "center",
+                    }}
+                  >
                     <button
                       className={` ${
                         selectedRole === "candidate"
@@ -140,7 +167,13 @@ const Login = () => {
                       Candidate
                     </button>
                   </div>
-                  <div>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignContent: "center",
+                    }}
+                  >
                     <button
                       className={` ${
                         selectedRole === "employer"
@@ -194,9 +227,9 @@ const Login = () => {
                           <span className="custom-checkbox" /> Remember me
                         </label>
                       </div>
-                      <a href="#" className="pwd">
+                      <Link to="/ForgotPassword" className="pwd">
                         Forgot password?
-                      </a>
+                      </Link>
                     </div>
                   </div>
 
@@ -209,7 +242,7 @@ const Login = () => {
 
                 <div className="bottom-box">
                   <div className="text">
-                    Don't have an account? <a href="register.html">Signup</a>
+                    Don't have an account? <Link to="/">Signup</Link>
                   </div>
                   <div className="divider">
                     <span>or</span>
@@ -232,117 +265,3 @@ const Login = () => {
 };
 
 export default Login;
-// import React, { useState } from "react";
-// import { useNavigate } from "react-router-dom";
-// import axios from "axios";
-// import Swal from "sweetalert2";
-
-// const Login = () => {
-//   const [formData, setFormData] = useState({
-//     email: "",
-//     password: "",
-//     rememberMe: false,
-//   });
-//   const [selectedRole, setSelectedRole] = useState("candidate");
-//   const navigate = useNavigate();
-
-//   const handleChange = (e) => {
-//     const { name, value, type, checked } = e.target;
-//     setFormData({
-//       ...formData,
-//       [name]: type === "checkbox" ? checked : value,
-//     });
-//   };
-
-//   const handleLogin = async (e) => {
-//     e.preventDefault();
-//     const loginUrl =
-//       selectedRole === "candidate"
-//         ? "http://localhost:4000/api/candidate/login"
-//         : "http://localhost:4000/api/employer/login";
-
-//     try {
-//       const response = await axios.post(loginUrl, formData);
-//       if (response.status === 200 && response.data.success) {
-//         localStorage.setItem("authToken", response.data.token);
-//         Swal.fire("Success", "Login successful!", "success");
-//         navigate("/dashboard");
-//       } else {
-//         Swal.fire("Error", "Invalid credentials. Please try again.", "error");
-//       }
-//     } catch (error) {
-//       console.error("Login failed:", error);
-//       Swal.fire(
-//         "Error",
-//         "Something went wrong. Please try again later.",
-//         "error"
-//       );
-//     }
-//   };
-
-//   const loginWithGoogle = () => {
-//     window.open(
-//       `http://localhost:4000/auth/google?role=${selectedRole}`,
-//       "_self"
-//     );
-//   };
-
-//   return (
-//     <div className="login-page">
-//       <h1 style={{ textAlign: "center" }}>Login</h1>
-//       <div className="toggle-buttons">
-//         <button
-//           className={selectedRole === "candidate" ? "active" : ""}
-//           onClick={() => setSelectedRole("candidate")}
-//         >
-//           Candidate
-//         </button>
-//         <button
-//           className={selectedRole === "employer" ? "active" : ""}
-//           onClick={() => setSelectedRole("employer")}
-//         >
-//           Employer
-//         </button>
-//       </div>
-//       <div className="form">
-//         <form className="login-form" onSubmit={handleLogin}>
-//           <input
-//             type="email"
-//             name="email"
-//             placeholder="Email"
-//             value={formData.email}
-//             onChange={handleChange}
-//             required
-//           />
-//           <input
-//             type="password"
-//             name="password"
-//             placeholder="Password"
-//             value={formData.password}
-//             onChange={handleChange}
-//             required
-//           />
-//           <div className="checkbox-group">
-//             <input
-//               type="checkbox"
-//               name="rememberMe"
-//               id="remember"
-//               checked={formData.rememberMe}
-//               onChange={handleChange}
-//             />
-//             <label htmlFor="remember">Remember me</label>
-//           </div>
-//           <button type="submit">Login</button>
-//           <p className="message">
-//             Not Registered? <a href="/register">Create an account</a>
-//           </p>
-//         </form>
-//         <button className="login-with-google-btn" onClick={loginWithGoogle}>
-//           Sign In With Google
-//         </button>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default Login;
