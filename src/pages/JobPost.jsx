@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import TemporaryDrawer from "./SideBar";
 
 const JobPost = () => {
   const [formData, setFormData] = useState({
@@ -215,6 +216,7 @@ const JobPost = () => {
                     className="thumb"
                   />
                 </button>
+                <TemporaryDrawer />
               </div>
             </div>
           </div>

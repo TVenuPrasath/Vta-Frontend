@@ -4574,6 +4574,10 @@ readers do not read off random characters that represent icons */
   font-family: 'Line Awesome Free';
   font-weight: 400; }
 
+  .la.la-edit {
+    font-family: "Line Awesome Free";
+    font-weight: 400;
+  }
 .la.la-eye-slash {
   font-family: 'Line Awesome Free';
   font-weight: 400; }

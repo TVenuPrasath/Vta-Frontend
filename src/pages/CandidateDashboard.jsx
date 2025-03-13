@@ -1,4 +1,5 @@
 import React from "react";
+import TemporaryDrawer from "./SideBar";
 
 const CandidateDashboard = () => {
   return (
@@ -151,12 +152,7 @@ const CandidateDashboard = () => {
                     className="thumb"
                   />
                 </button>
-                <a
-                  href="#nav-mobile"
-                  className="mobile-nav-toggler navbar-trigger"
-                >
-                  <span className="flaticon-menu-1" />
-                </a>
+                <TemporaryDrawer />
               </div>
             </div>
           </div>

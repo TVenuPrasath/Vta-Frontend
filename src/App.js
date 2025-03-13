@@ -30,8 +30,7 @@ function App() {
         <Route path="/reset-password" element={<ResetPassword/>} />
         <Route path="/Jobs" element={<Jobs/>} />
         <Route path="/EditJobs" element={<EditJobs/>} />
-
-
+        <Route path="/EditJobs/:jobId" element={<EditJobs />} />
       </Routes>
     </Router>
   );

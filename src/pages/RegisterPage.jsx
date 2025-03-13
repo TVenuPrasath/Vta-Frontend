@@ -367,7 +367,7 @@ const RegisterPage = () => {
                               className={
                                 selectedRole === "candidate"
                                   ? "theme-btn candidate-button active"
-                                  : "theme-btn employer-button disabled"
+                                  : "inactive"
                               }
                               onClick={() => setSelectedRole("candidate")}
                             >
@@ -375,13 +375,21 @@ const RegisterPage = () => {
                             </Link>
                           </div>
                           {/* Employer Button */}
-                          <div className="col-lg-6 col-md-12">
+                          <div
+                            className="col-lg-6 col-md-12"
+                            style={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignContent: "center",
+                              paddingTop: "6px",
+                            }}
+                          >
                             <Link
                               to="/ComapanyProfile"
                               className={
                                 selectedRole === "employer"
                                   ? "theme-btn candidate-button active"
-                                  : "theme-btn employer-button disabled"
+                                  : "inactive"
                               }
                               onClick={() => setSelectedRole("employer")}
                             >

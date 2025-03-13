@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const ManageJobs = () => {
@@ -309,6 +310,13 @@ const ManageJobs = () => {
                                             <span className="la la-eye" />
                                           </button>
                                         </a>
+                                      </li>
+                                      <li>
+                                        <Link to={`/EditJobs/${job._id}`}>
+                                          <button data-text="Edit">
+                                            <span className="la la-edit" />
+                                          </button>
+                                        </Link>
                                       </li>
                                       <li>
                                         <button
