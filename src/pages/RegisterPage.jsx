@@ -224,67 +224,20 @@ const RegisterPage = () => {
                     </Link>
                   </div>
                 </div>
-                {/* <nav className="nav main-menu">
-                  <ul className="navigation" id="navbar">
-                    <li className="current">
-                      <a href="index.html">Home</a>
-                    </li>
-                    <li>
-                      <a href="about.html">About</a>
-                    </li>
-                    <li>
-                      <a href="jobs.html">Jobs</a>
-                    </li>
-                    <li>
-                      <a href="companies.html">Companies</a>
-                    </li>
-                    <li>
-                      <a href="courses.html">Courses</a>
-                    </li>
-                    {/* Only for Mobile View */}
-                {/* <li className="mm-add-listing">
-                      <a
-                        href="add-listing.html"
-                        className="theme-btn btn-style-one"
-                      >
-                        Job Post
-                      </a> */}
-                {/* <span>
-                        <span className="contact-info">
-                          <span className="phone-num">
-                            <span>Call us</span>
-                            <a href="tel:1234567890">123 456 7890</a>
-                          </span>
-                          <span className="address">
-                            329 Queensberry Street, North Melbourne VIC
-                            <br />
-                            3051, Australia.
-                          </span>
-                          <a
-                            href="mailto:support@superio.com"
-                            className="email"
-                          >
-                            support@superio.com
-                          </a>
-                        </span> 
-                        {/* <span className="social-links"> */}
-                {/* <a href="#">
-                            <span className="fab fa-facebook-f" />
-                          </a>
-                          <a href="#">
-                            <span className="fab fa-twitter" />
-                          </a>
-                          <a href="#">
-                            <span className="fab fa-instagram" />
-                          </a>
-                          <a href="#">
-                            <span className="fab fa-linkedin-in" />
-                          </a>
-                        </span> 
-                       </span>  */}
-                {/* </li> */}
-                {/* </ul>
-                </nav> */}
+                <span className="contact-info">
+                  <span className="phone-num">
+                    <span>Call us</span>
+                    <Link to="tel:1234567890">123 456 7890</Link>
+                  </span>
+                  <span className="address">
+                    329 Queensberry Street, North Melbourne VIC
+                    <br />
+                    3051, Australia.
+                  </span>
+                  <Link to="mailto:support@superio.com" className="email">
+                    support@superio.com
+                  </Link>
+                </span>
                 {/* Main Menu End*/}
               </div>
               <div className="outer-box">
@@ -303,7 +256,6 @@ const RegisterPage = () => {
           {/* Mobile Header */}
           <div className="mobile-header">
             <div className="logo">
-              {/* <a href="index.html"> */}
               <img
                 src="images/VTA-logo.png"
                 style={{ width: "60%", marginBottom: 5 }}
@@ -322,12 +274,6 @@ const RegisterPage = () => {
                     Login
                   </Link>
                 </div>
-                {/* <a
-                  href="#nav-mobile"
-                  className="mobile-nav-toggler navbar-trigger"
-                >
-                  <span className="flaticon-menu-1" />
-                </a> */}
               </div>
             </div>
           </div>
@@ -346,12 +292,7 @@ const RegisterPage = () => {
               <div className="form-inner">
                 <h3>Create a Free VTA Account</h3>
                 {/* Login/Registration Form */}
-                <form
-                  method="post"
-                  action="register.php" //-----------------------there is action
-                  className="styled-form"
-                  encType="multipart/form-data"
-                >
+                <form className="styled-form" encType="multipart/form-data">
                   {step === 1 && (
                     <div className="form-step">
                       <div className="form-group">
@@ -359,8 +300,7 @@ const RegisterPage = () => {
                           {/* Candidate Button */}
                           <div className="col-lg-6 col-md-12">
                             <Link
-                              to
-                              href="#"
+                              to=""
                               className={
                                 selectedRole === "candidate"
                                   ? "theme-btn candidate-button active"
@@ -726,17 +666,6 @@ const RegisterPage = () => {
                       '\n                /* Style for navigation buttons */\n                .form-group button {\n                  background-color: #4caf50;\n                  color: white;\n                  padding: 10px 20px;\n                  margin: 5px;\n                  border: none;\n                  cursor: pointer;\n                  border-radius: 5px;\n                }\n\n                .form-group button:hover {\n                  background-color: #45a049;\n                }\n\n                #prev-btn {\n                  background-color: #f44336;\n                }\n\n                #prev-btn:hover {\n                  background-color: #e53935;\n                }\n\n                /* Additional styling for the form */\n                .form-group input[type="file"] {\n                  padding: 8px;\n                }\n\n                /* Styling for the dynamic addable fields */\n                .form-group div {\n                  margin-bottom: 10px;\n                }\n\n                .form-group input[type="text"],\n                .form-group input[type="url"],\n                .form-group input[type="date"],\n                .form-group select {\n                  width: 100%;\n                  padding: 10px;\n                  margin: 5px 0;\n                }\n\n                .form-group button[type="button"] {\n                  background-color: #2196f3;\n                  margin-top: 5px;\n                }\n              ',
                   }}
                 />
-                {/* <div class="bottom-box">
-        <div class="divider"><span>or</span></div>
-        <div class="btn-box row">
-          <div class="col-lg-6 col-md-12">
-            <a href="#" class="theme-btn social-btn-two facebook-btn"><i class="fab fa-facebook-f"></i> Log In via Facebook</a>
-          </div>
-          <div class="col-lg-6 col-md-12">
-            <a href="#" class="theme-btn social-btn-two google-btn"><i class="fab fa-google"></i> Log In via Gmail</a>
-          </div>
-        </div>
-      </div> */}
               </div>
             </div>
             {/*End Login Form */}

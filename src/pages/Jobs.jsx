@@ -1,6 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import TemporaryDrawer from "./SideBar";
+import { useCallback } from "react";
+import { Link } from "react-router-dom";
 
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -14,18 +16,18 @@ const Jobs = () => {
   const [experience, setExperience] = useState("");
   const [salary, setSalary] = useState("");
 
-  const applyFilters = () => {
-    let filtered = jobs;
+  const applyFilters = useCallback(() => {
+    let filtered = [...jobs];
 
     if (searchQuery) {
       filtered = filtered.filter((job) =>
-        job.title.toLowerCase().includes(searchQuery.toLowerCase())
+        job.title?.toLowerCase().includes(searchQuery.toLowerCase())
       );
     }
 
     if (location) {
       filtered = filtered.filter((job) =>
-        job.location.toLowerCase().includes(location.toLowerCase())
+        job.location?.toLowerCase().includes(location.toLowerCase())
       );
     }
 
@@ -46,8 +48,12 @@ const Jobs = () => {
     }
 
     if (salary) {
-      const salaryRange = salary.split(" - ").map((s) => parseInt(s));
-      if (salaryRange.length === 2) {
+      const salaryRange = salary.split(" - ").map((s) => parseInt(s.trim()));
+      if (
+        salaryRange.length === 2 &&
+        !isNaN(salaryRange[0]) &&
+        !isNaN(salaryRange[1])
+      ) {
         filtered = filtered.filter(
           (job) =>
             job.minSalary >= salaryRange[0] && job.maxSalary <= salaryRange[1]
@@ -56,19 +62,11 @@ const Jobs = () => {
     }
 
     setFilteredJobs(filtered);
-  };
+  }, [jobs, searchQuery, location, category, jobType, experience, salary]);
 
   useEffect(() => {
     applyFilters();
-  }, [
-    searchQuery,
-    location,
-    category,
-    jobType,
-    datePosted,
-    experience,
-    salary,
-  ]);
+  }, [applyFilters]);
 
   useEffect(() => {
     const fetchJobs = async () => {
@@ -107,14 +105,14 @@ const Jobs = () => {
             <div className="nav-outer">
               <div className="logo-box">
                 <div className="logo">
-                  <a href="index.html">
+                  <Link to="index.html">
                     <img
                       src="images/VTA-logo.png"
                       style={{ width: "60%", marginBottom: 5 }}
                       alt=""
                       title=""
                     />
-                  </a>
+                  </Link>
                 </div>
               </div>
               <nav className="nav main-menu">
@@ -157,18 +155,18 @@ const Jobs = () => {
                         </a>
                       </span>
                       <span className="social-links">
-                        <a href="#">
+                        <Link to="/Jobs">
                           <span className="fab fa-facebook-f" />
-                        </a>
-                        <a href="#">
+                        </Link>
+                        <Link to="/Jobs">
                           <span className="fab fa-twitter" />
-                        </a>
-                        <a href="#">
+                        </Link>
+                        <Link to="/Jobs">
                           <span className="fab fa-instagram" />
-                        </a>
-                        <a href="#">
+                        </Link>
+                        <Link to="/Jobs">
                           <span className="fab fa-linkedin-in" />
-                        </a>
+                        </Link>
                       </span>
                     </span>
                   </li>
@@ -178,49 +176,43 @@ const Jobs = () => {
             </div>
             <div className="outer-box">
               {/* Add Listing */}
-              <a
-                href="candidate-dashboard-cv-manager.html"
-                className="upload-cv"
-              >
+              <Link to="/Jobs" className="upload-cv">
                 Upload your CV
-              </a>
+              </Link>
               {/* Login/Register */}
               <div className="btn-box">
-                <a
-                  href="login-popup.html"
+                <Link
+                  to="/Jobs"
                   className="theme-btn btn-style-three call-modal"
                 >
                   <span style={{ color: "white" }}>Login / Register</span>
-                </a>
-                <a
-                  href="dashboard-post-job.html"
-                  className="theme-btn btn-style-one"
-                >
+                </Link>
+                <Link to="/Jobs" className="theme-btn btn-style-one">
                   <span style={{ color: "white" }}>Job Post</span>
-                </a>
+                </Link>
               </div>
             </div>
           </div>
           {/* Mobile Header */}
           <div className="mobile-header">
             <div className="logo">
-              <a href="index.html">
+              <Link to="index.html">
                 <img
                   src="images/VTA-logo.png"
                   style={{ width: "60%", marginBottom: 5 }}
                   alt=""
                   title=""
                 />
-              </a>
+              </Link>
             </div>
             {/*Nav Box*/}
             <div className="nav-outer clearfix">
               <div className="outer-box">
                 {/* Login/Register */}
                 <div className="login-box">
-                  <a href="login-popup.html" className="call-modal">
+                  <Link to="/Login" className="call-modal">
                     <span className="icon-user" />
-                  </a>
+                  </Link>
                 </div>
                 <TemporaryDrawer />
               </div>
@@ -452,19 +444,19 @@ const Jobs = () => {
                 <div className="big-column col-xl-4 col-lg-3 col-md-12">
                   <div className="footer-column about-widget">
                     <div className="logo">
-                      <a href="#">
+                      <Link to="">
                         <img
                           src="images/VTA-logo.png"
                           style={{ width: "60%", marginBottom: 5 }}
                           alt=""
                         />
-                      </a>
+                      </Link>
                     </div>
                     <p className="phone-num">
                       <span>Call us </span>
-                      <a href="thebeehost@support.com">1 (314) 732 0300</a>
+                      <Link to="thebeehost@support.com">1 (314) 732 0300</Link>
                       <br />
-                      <a href="thebeehost@support.com">+91 96000 85988</a>
+                      <Link to="thebeehost@support.com">+91 96000 85988</Link>
                     </p>
                     <p className="address">
                       Akshaya HQ, Rajiv Gandhi Salai, Kazhipattur,
@@ -490,22 +482,18 @@ const Jobs = () => {
                         <div className="widget-content">
                           <ul className="list">
                             <li>
-                              <a href="jobs.html">Browse Jobs</a>
+                              <Link to="/Jobs">Browse Jobs</Link>
                             </li>
                             <li>
-                              <a href="candidate-dashboard-resume.html">
-                                upload Resume
-                              </a>
+                              <Link to="/Jobs">upload Resume</Link>
                             </li>
                             <li>
-                              <a href="candidate-dashboard.html">
+                              <Link to="CandidateDashboard">
                                 Find companies
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a href="candidate-dashboard-job-alerts.html">
-                                Job Alerts
-                              </a>
+                              <Link to="CandidateDashboard">Job Alerts</Link>
                             </li>
                           </ul>
                         </div>
@@ -517,16 +505,16 @@ const Jobs = () => {
                         <div className="widget-content">
                           <ul className="list">
                             <li>
-                              <a href="login.html">Employer login</a>
+                              <Link to="/Login">Employer login</Link>
                             </li>
                             <li>
-                              <a href="dashboard-post-job.html">Job posting</a>
+                              <Link to="/Jobs">Job posting</Link>
                             </li>
                             <li>
-                              <a href="#">Discover Talent</a>
+                              <Link to="/Jobs">Discover Talent</Link>
                             </li>
                             <li>
-                              <a href="dashboard-packages.html">Packages</a>
+                              <Link to="/Jobs">Packages</Link>
                             </li>
                           </ul>
                         </div>
@@ -538,13 +526,13 @@ const Jobs = () => {
                         <div className="widget-content">
                           <ul className="list">
                             <li>
-                              <a href="about.html">About</a>
+                              <Link to="/Jobs">About</Link>
                             </li>
                             <li>
-                              <a href="contact.html">Contact</a>
+                              <Link to="/Jobs">Contact</Link>
                             </li>
                             <li>
-                              <a href="faqs.html">FAQ</a>
+                              <Link to="/Jobs">FAQ</Link>
                             </li>
                           </ul>
                         </div>
@@ -556,20 +544,16 @@ const Jobs = () => {
                         <div className="widget-content">
                           <ul className="list">
                             <li>
-                              <a href="courses-allcourse.html">All courses</a>
+                              <Link to="/Jobs">All courses</Link>
                             </li>
                             <li>
-                              <a href="course-enrolled.html">My courses</a>
+                              <Link to="/Jobs">My courses</Link>
                             </li>
                             <li>
-                              <a href="completedcourses.html">
-                                Completed Courses
-                              </a>
+                              <Link to="/Jobs">Completed Courses</Link>
                             </li>
                             <li>
-                              <a href="SkillAssesmentdashboard.html">
-                                Skill Assessment
-                              </a>
+                              <Link to="/Jobs">Skill Assessment</Link>
                             </li>
                           </ul>
                         </div>
@@ -585,21 +569,21 @@ const Jobs = () => {
             <div className="auto-container">
               <div className="outer-box">
                 <div className="copyright-text">
-                  © 2024 <a href="#">VTA</a>. All Right Reserved.
+                  © 2024 <Link to="/Jobs">VTA</Link>. All Right Reserved.
                 </div>
                 <div className="social-links">
-                  <a href="#">
+                  <Link to="/Jobs">
                     <i className="fab fa-facebook-f" />
-                  </a>
-                  <a href="#">
+                  </Link>
+                  <Link to="/Jobs">
                     <i className="fab fa-twitter" />
-                  </a>
-                  <a href="#">
+                  </Link>
+                  <Link to="/Jobs">
                     <i className="fab fa-instagram" />
-                  </a>
-                  <a href="#">
+                  </Link>
+                  <Link to="/Jobs">
                     <i className="fab fa-linkedin-in" />
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

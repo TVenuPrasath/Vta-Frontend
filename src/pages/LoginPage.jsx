@@ -98,49 +98,49 @@ const Login = () => {
               <div className="nav-outer">
                 <div className="logo-box">
                   <div className="logo">
-                    <a href="index.html">
+                    <Link to="index.html">
                       <img
                         src="images/VTA-logo.png"
                         style={{ width: "60%", marginBottom: 5 }}
                         alt="VTA Logo"
                       />
-                    </a>
+                    </Link>
                   </div>
                 </div>
                 <nav className="nav main-menu">
                   <ul className="navigation" id="navbar">
                     <li className="current">
-                      <a href="index.html">Home</a>
+                      <Link to="index.html">Home</Link>
                     </li>
                     <li>
-                      <a href="about.html">About</a>
+                      <Link to="about.html">About</Link>
                     </li>
                     <li>
-                      <a href="jobs.html">Jobs</a>
+                      <Link to="jobs.html">Jobs</Link>
                     </li>
                     <li>
-                      <a href="companies.html">Companies</a>
+                      <Link to="companies.html">Companies</Link>
                     </li>
                     <li>
-                      <a href="courses.html">Courses</a>
+                      <Link to="courses.html">Courses</Link>
                     </li>
                   </ul>
                 </nav>
               </div>
               <div className="outer-box">
                 <div className="btn-box">
-                  <a
-                    href="register.html"
+                  <Link
+                    to="register.html"
                     className="theme-btn theme-clone bdrs30"
                   >
                     Register
-                  </a>
-                  <a
-                    href="login.html"
+                  </Link>
+                  <Link
+                    to="login.html"
                     className="home21-jp-btn login-btn bdrs30"
                   >
                     Login
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
