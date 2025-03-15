@@ -214,17 +214,17 @@ const RegisterPage = () => {
               <div className="nav-outer">
                 <div className="logo-box">
                   <div className="logo">
-                    <a href="index.html">
+                    <Link to="index.html">
                       <img
                         src="images/VTA-logo.png"
                         style={{ width: "60%", marginBottom: 5 }}
                         alt=""
                         title=""
                       />
-                    </a>
+                    </Link>
                   </div>
                 </div>
-                <nav className="nav main-menu">
+                {/* <nav className="nav main-menu">
                   <ul className="navigation" id="navbar">
                     <li className="current">
                       <a href="index.html">Home</a>
@@ -242,14 +242,14 @@ const RegisterPage = () => {
                       <a href="courses.html">Courses</a>
                     </li>
                     {/* Only for Mobile View */}
-                    <li className="mm-add-listing">
+                {/* <li className="mm-add-listing">
                       <a
                         href="add-listing.html"
                         className="theme-btn btn-style-one"
                       >
                         Job Post
-                      </a>
-                      <span>
+                      </a> */}
+                {/* <span>
                         <span className="contact-info">
                           <span className="phone-num">
                             <span>Call us</span>
@@ -266,9 +266,9 @@ const RegisterPage = () => {
                           >
                             support@superio.com
                           </a>
-                        </span>
-                        {/* <span className="social-links">
-                          <a href="#">
+                        </span> 
+                        {/* <span className="social-links"> */}
+                {/* <a href="#">
                             <span className="fab fa-facebook-f" />
                           </a>
                           <a href="#">
@@ -280,11 +280,11 @@ const RegisterPage = () => {
                           <a href="#">
                             <span className="fab fa-linkedin-in" />
                           </a>
-                        </span> */}
-                      </span>
-                    </li>
-                  </ul>
-                </nav>
+                        </span> 
+                       </span>  */}
+                {/* </li> */}
+                {/* </ul>
+                </nav> */}
                 {/* Main Menu End*/}
               </div>
               <div className="outer-box">
@@ -293,12 +293,9 @@ const RegisterPage = () => {
                   <Link to="/" className="theme-btn theme-clone bdrs30">
                     Register
                   </Link>
-                  <a
-                    href="login.html"
-                    className="home21-jp-btn login-btn bdrs30"
-                  >
+                  <Link to="/Login" className="home21-jp-btn login-btn bdrs30">
                     Login
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -306,14 +303,14 @@ const RegisterPage = () => {
           {/* Mobile Header */}
           <div className="mobile-header">
             <div className="logo">
-              <a href="index.html">
-                <img
-                  src="images/VTA-logo.png"
-                  style={{ width: "60%", marginBottom: 5 }}
-                  alt=""
-                  title=""
-                />
-              </a>
+              {/* <a href="index.html"> */}
+              <img
+                src="images/VTA-logo.png"
+                style={{ width: "60%", marginBottom: 5 }}
+                alt=""
+                title=""
+              />
+              {/* </a> */}
             </div>
             {/*Nav Box*/}
             <div className="nav-outer clearfix">
@@ -325,12 +322,12 @@ const RegisterPage = () => {
                     Login
                   </Link>
                 </div>
-                <a
+                {/* <a
                   href="#nav-mobile"
                   className="mobile-nav-toggler navbar-trigger"
                 >
                   <span className="flaticon-menu-1" />
-                </a>
+                </a> */}
               </div>
             </div>
           </div>
