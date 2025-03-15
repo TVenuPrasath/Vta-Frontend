@@ -1,13 +1,17 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import Swal from "sweetalert2";
 
 const ForgetPassword = () => {
+  const { role: urlRole } = useParams();
   const [email, setEmail] = useState("");
-  const [role, setRole] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [step, setStep] = useState(1); // Step control
+  const [role, setRole] = useState(urlRole || "");
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (urlRole) setRole(urlRole);
+  }, [urlRole]);
 
   const handleForgotPassword = async (e) => {
     e.preventDefault();
@@ -18,10 +22,7 @@ const ForgetPassword = () => {
 
       const response = await axios.post(
         "http://localhost:4000/auth/forgot-password",
-        {
-          email: email,
-          role: role,
-        }
+        { email, role }
       );
 
       console.log("Forgot Password Response:", response.data);
@@ -31,7 +32,6 @@ const ForgetPassword = () => {
           "Password reset link sent to your email!",
           "success"
         );
-        setStep(2);
       }
     } catch (error) {
       console.error(
@@ -40,55 +40,7 @@ const ForgetPassword = () => {
       );
       Swal.fire(
         "Error",
-        error.response?.data?.message || "Invalid role or email not found!",
-        "error"
-      );
-    }
-
-    setLoading(false);
-  };
-
-  const handleResetPassword = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-
-    const token = localStorage.getItem("token");
-    console.log("Token from local storage:", token);
-
-    if (!token) {
-      Swal.fire("Error", "Invalid or expired token. Try again!", "error");
-      setLoading(false);
-      return;
-    }
-
-    try {
-      console.log("Sending reset request with:", { token, newPassword });
-
-      const response = await axios.post(
-        "http://localhost:4000/auth/reset-password",
-        {
-          token: token,
-          newPassword: newPassword,
-        }
-      );
-
-      console.log("Reset Password Response:", response.data);
-      if (response.status === 200) {
-        Swal.fire(
-          "Success",
-          "Password reset successful! You can now log in.",
-          "success"
-        );
-        window.location.href = "/login";
-      }
-    } catch (error) {
-      console.error(
-        "Reset Password Error:",
-        error.response?.data || error.message
-      );
-      Swal.fire(
-        "Error",
-        error.response?.data?.message || "Password reset failed!",
+        error.response?.data?.message || "Invalid email or role!",
         "error"
       );
     }
@@ -113,20 +65,6 @@ const ForgetPassword = () => {
                   placeholder="Enter your email"
                   required
                 />
-              </div>
-              <div className="form-group">
-                <label>Select Role</label>
-                <select
-                  name="role"
-                  className="chosen-select"
-                  value={role}
-                  onChange={(e) => setRole(e.target.value)}
-                  required
-                >
-                  <option value="">Select Role</option>
-                  <option value="employer">Employer</option>
-                  <option value="candidate">Candidate</option>
-                </select>
               </div>
               <div className="form-group">
                 <button

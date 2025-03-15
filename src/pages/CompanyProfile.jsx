@@ -7,11 +7,11 @@ import Swal from "sweetalert2";
 const CompanyProfile = () => {
   const navigate = useNavigate();
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  // const [dropdownOpen, setDropdownOpen] = useState(false);
   const [aboutCompany, setAboutCompany] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [selectedCover, setSelectedCover] = useState(null);
-  const [categories, setcategories] = useState([]);
+  // const [categories, setcategories] = useState([]);
 
   const categoryOptions = [
     { value: "Banking", label: "Banking" },
@@ -39,7 +39,7 @@ const CompanyProfile = () => {
     googlePlus: "",
   });
 
-  const toggleDropdown = () => setDropdownOpen((prev) => !prev);
+  // const toggleDropdown = () => setDropdownOpen((prev) => !prev);
 
   const handleFileChange = (event) => setSelectedFile(event.target.files[0]);
   const handleCoverUpload = (event) => setSelectedCover(event.target.files[0]);
@@ -75,7 +75,7 @@ const CompanyProfile = () => {
 
     formDataToSend.append("name", formData.name);
     formDataToSend.append("email", formData.email);
-    formDataToSend.append("password", "securepassword123");
+    formDataToSend.append("password", formData.password);
     formDataToSend.append("phone", formData.phone);
     formDataToSend.append("website", formData.website);
     formDataToSend.append("establishedSince", formData.establishedSince);
@@ -93,9 +93,9 @@ const CompanyProfile = () => {
       formDataToSend.append("coverImage", selectedCover);
     }
 
-    // for (let [key, value] of formDataToSend.entries()) {
-    //   console.log(key, value);
-    // }
+    for (let [key, value] of formDataToSend.entries()) {
+      console.log(key, value);
+    }
     try {
       const response = await axios.post(
         "http://localhost:4000/api/company/register",
@@ -151,7 +151,7 @@ const CompanyProfile = () => {
                 </button>
                 {/* Dashboard Option */}
                 <div className="dropdown dashboard-option">
-                  <a
+                  {/* <a
                     className="dropdown-toggle"
                     role="button"
                     data-toggle="dropdown"
@@ -163,7 +163,7 @@ const CompanyProfile = () => {
                       className="thumb"
                     />
                     <span className="name">My Account</span>
-                  </a>
+                  </a> */}
                   <ul className="dropdown-menu">
                     <li>
                       <a href="account.html">
@@ -296,10 +296,10 @@ const CompanyProfile = () => {
               </li>
               <li>
                 {/* <a onClick={notifyToggleAppliedJob}> */}
-                <a>
+                {/* <a>
                   <i className="la la-trash" />
                   Delete Profile
-                </a>
+                </a> */}
               </li>
             </ul>
           </div>
@@ -323,65 +323,67 @@ const CompanyProfile = () => {
                       <h4>My Profile</h4>
                     </div>
                     <div className="widget-content">
-                      <div className="text" style={{ color: "black" }}>
-                        Max file size is 1MB, Minimum dimension: 330x300 And
-                        Suitable files are .jpg &amp; .png
-                      </div>
-                      <div className="uploading-outer">
-                        <div className="uploadButton">
-                          <input
-                            className="uploadButton-input"
-                            type="file"
-                            name="logo"
-                            accept="image/*"
-                            id="upload"
-                            onChange={handleFileChange}
-                          />
-                          <label
-                            className="uploadButton-button ripple-effect"
-                            htmlFor="upload"
-                          >
-                            Browse Logo
-                          </label>
-                          <span className="uploadButton-file-name">
-                            {selectedFile
-                              ? selectedFile.name
-                              : "No file selected"}
-                          </span>
+                      <div
+                        style={{
+                          // display: "flex",
+                          // flexdirection:"",
+                          gap: "10px",
+                        }}
+                      >
+                        <div className="uploading-outer">
+                          <div className="uploadButton">
+                            <input
+                              className="uploadButton-input"
+                              type="file"
+                              name="logo"
+                              accept="image/*"
+                              id="upload"
+                              onChange={handleFileChange}
+                            />
+                            <label
+                              className="uploadButton-button ripple-effect"
+                              htmlFor="upload"
+                            >
+                              Browse Logo.
+                            </label>
+                            <span className="uploadButton-file-name">
+                              {selectedFile
+                                ? selectedFile.name
+                                : "No file selected"}
+                            </span>
+                          </div>
                         </div>
-                      </div>
-                      <div className="text" style={{ color: "black" }}>
-                        Max file size is 1MB, Minimum dimension: 330x300 And
-                        Suitable files are .jpg &amp; .png
+
+                        <div className="uploading-outer">
+                          <div
+                            className="uploadButton"
+                            style={{
+                              flexDirection: "column",
+                            }}
+                          >
+                            <input
+                              className="uploadButton-input"
+                              type="file"
+                              name="coverImage"
+                              accept="image/*"
+                              id="upload_cover"
+                              onChange={handleCoverUpload}
+                            />
+                            <label
+                              className="uploadButton-button ripple-effect"
+                              htmlFor="upload_cover"
+                            >
+                              Browse Cover
+                            </label>
+                            <span className="uploadButton-file-name">
+                              {selectedCover
+                                ? selectedCover.name
+                                : "Max file size is 1MB"}
+                            </span>
+                          </div>
+                        </div>
                       </div>
 
-                      <div className="uploading-outer">
-                        <div className="uploadButton">
-                          <input
-                            className="uploadButton-input"
-                            type="file"
-                            name="coverImage"
-                            accept="image/*"
-                            id="upload_cover"
-                            onChange={handleCoverUpload}
-                          />
-                          <label
-                            className="uploadButton-button ripple-effect"
-                            htmlFor="upload_cover"
-                          >
-                            Browse Cover
-                          </label>
-                          <span className="uploadButton-file-name">
-                            {selectedCover
-                              ? selectedCover.name
-                              : "No file selected"}
-                          </span>
-                          {/* <div className="text" style={{ color: "black" }}>
-                            Max file size is 1MB, Minimum dimension: 330x300 And
-                            Suitable files are .jpg &amp; .png
-                          </div> */}
-                        </div>
-                      </div>
                       <form className="default-form">
                         <div className="row">
                           {/* Input */}

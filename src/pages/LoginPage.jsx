@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -28,22 +28,27 @@ const Login = () => {
       return;
     }
 
-    console.log("selectedRole:", selectedRole);
+    // console.log("selectedRole:", selectedRole);
     const loginUrl =
       selectedRole === "candidate"
-        ? "http://localhost:4000/api/candidate/login"
+        ? // ? "http://localhost:4000/api/candidate/login"
+          "https://vta-backend-production.up.railway.app/api/candidate/login"
         : "http://localhost:4000/api/company/login";
 
     try {
       // console.log("loginUrl:", loginUrl);
       // console.log("Sending login request with:", formData);
       const response = await axios.post(loginUrl, formData);
-      console.log("Login Response:", response.data);
+      // console.log("Login Response:", response.data);
 
       if (response.status === 200) {
         localStorage.setItem("authToken", response.data.data.token);
         localStorage.setItem("role", response.data.data.role);
-        localStorage.setItem("userId", response.data.data._id);
+        if (selectedRole === "candidate") {
+          localStorage.setItem("userId", response.data.data._id);
+        } else {
+          localStorage.setItem("userId", response.data.data.company);
+        }
 
         Swal.fire("Success", "Login successful!", "success");
 
@@ -66,11 +71,23 @@ const Login = () => {
   };
 
   const loginWithGoogle = () => {
-    window.open(
-      `http://localhost:4000/auth/google?role=${selectedRole}`,
-      "_self"
-    );
+    window.open(`http://localhost:4000/auth/google?role=candidate`, "_self");
   };
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    const role = params.get("role");
+    const id = params.get("_id");
+
+    if (token && role && id) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
+      localStorage.setItem("id", id);
+
+      navigate("/candidatedashboard");
+    }
+  }, [navigate]);
 
   return (
     <>
@@ -227,8 +244,8 @@ const Login = () => {
                           <span className="custom-checkbox" /> Remember me
                         </label>
                       </div>
-                      <Link to="/ForgotPassword" className="pwd">
-                        Forgot password?
+                      <Link to={`/forgot-password/${selectedRole}`}>
+                        Forgot Password?
                       </Link>
                     </div>
                   </div>

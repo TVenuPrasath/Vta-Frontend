@@ -25,12 +25,12 @@ function App() {
         <Route path="/companydashboard" element={<CompanyDashboard/>} />
         <Route path="/EmployerRegister" element={<EmployerRegister/>} />
         <Route path="/Login" element={<LoginPage/>} />
-        <Route path="/ForgotPassword" element={<ForgetPassword/>} />
         <Route path="/ManageJobs" element={<ManageJobs/>} />
         <Route path="/reset-password" element={<ResetPassword/>} />
         <Route path="/Jobs" element={<Jobs/>} />
         <Route path="/EditJobs" element={<EditJobs/>} />
         <Route path="/EditJobs/:jobId" element={<EditJobs />} />
+        <Route path="/forgot-password/:role" element={<ForgetPassword />} />
       </Routes>
     </Router>
   );

@@ -267,7 +267,7 @@ const RegisterPage = () => {
                             support@superio.com
                           </a>
                         </span>
-                        <span className="social-links">
+                        {/* <span className="social-links">
                           <a href="#">
                             <span className="fab fa-facebook-f" />
                           </a>
@@ -280,7 +280,7 @@ const RegisterPage = () => {
                           <a href="#">
                             <span className="fab fa-linkedin-in" />
                           </a>
-                        </span>
+                        </span> */}
                       </span>
                     </li>
                   </ul>

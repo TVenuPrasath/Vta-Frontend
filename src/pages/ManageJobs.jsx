@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
+import TemporaryDrawer from "./SideBar";
 
 const ManageJobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -10,7 +11,7 @@ const ManageJobs = () => {
     const fetchJobs = async () => {
       try {
         const response = await axios.get("http://localhost:4000/api/job/");
-        console.log("API Response:", response.data);
+        // console.log("API Response:", response.data);
 
         setJobs(response.data.data.jobs);
       } catch (error) {
@@ -80,7 +81,7 @@ const ManageJobs = () => {
                 </button>
                 {/* Dashboard Option */}
                 <div className="dropdown dashboard-option">
-                  <a
+                  {/* <a
                     className="dropdown-toggle"
                     role="button"
                     data-toggle="dropdown"
@@ -92,7 +93,7 @@ const ManageJobs = () => {
                       className="thumb"
                     />
                     <span className="name">My Account</span>
-                  </a>
+                  </a> */}
                   <ul className="dropdown-menu">
                     <li>
                       <a href="account.html">
@@ -139,6 +140,7 @@ const ManageJobs = () => {
                     className="thumb"
                   />
                 </button>
+                <TemporaryDrawer />
               </div>
             </div>
           </div>
@@ -223,10 +225,10 @@ const ManageJobs = () => {
                 </a>
               </li>
               <li>
-                <a onclick="showCandModal()">
+                {/* <a onclick="showCandModal()">
                   <i className="la la-trash" />
                   Delete Profile
-                </a>
+                </a> */}
               </li>
             </ul>
           </div>
