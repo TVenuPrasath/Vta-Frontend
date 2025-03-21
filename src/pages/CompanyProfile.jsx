@@ -132,7 +132,7 @@ const CompanyProfile = () => {
               <div className="nav-outer">
                 <div className="logo-box">
                   <div className="logo">
-                    <Link to="index.html">
+                    <a href="index.html">
                       <img
                         src="images/VTA.png"
                         width={154}
@@ -140,7 +140,7 @@ const CompanyProfile = () => {
                         alt=""
                         title=""
                       />
-                    </Link>
+                    </a>
                   </div>
                 </div>
                 {/* Main Menu End*/}
@@ -150,14 +150,42 @@ const CompanyProfile = () => {
                   <span className="icon la la-bell" />
                 </button>
                 {/* Dashboard Option */}
-                <div className="dropdown dashboard-option"></div>
+                <div className="dropdown dashboard-option">
+                  {/* <a
+                    className="dropdown-toggle"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <img
+                      src="images/resource/company-6.png"
+                      alt="avatar"
+                      className="thumb"
+                    />
+                    <span className="name">My Account</span>
+                  </a> */}
+                  <ul className="dropdown-menu">
+                    <li>
+                      <a href="account.html">
+                        <i className="fa fa-cog" />
+                        Settings
+                      </a>
+                    </li>
+                    <li>
+                      <a href="index.html">
+                        <i className="la la-sign-out" />
+                        Logout
+                      </a>
+                    </li>
+                  </ul>
+                </div>
               </div>
             </div>
           </div>
           {/* Mobile Header */}
           <div className="mobile-header">
             <div className="logo">
-              <Link to="index.html">
+              <a href="index.html">
                 <img
                   src="images/VTA.png"
                   alt=""
@@ -165,7 +193,7 @@ const CompanyProfile = () => {
                   height={50}
                   title=""
                 />
-              </Link>
+              </a>
             </div>
             {/*Nav Box*/}
             <div className="nav-outer clearfix">
@@ -193,6 +221,89 @@ const CompanyProfile = () => {
         {/* Sidebar Backdrop */}
         <div className="sidebar-backdrop" />
         {/* User Sidebar */}
+        <div className="user-sidebar">
+          <div className="sidebar-inner">
+            <ul className="navigation">
+              <li>
+                <a href="dashboard.html">
+                  {" "}
+                  <i className="la la-home" /> Dashboard
+                </a>
+              </li>
+              <li className="active">
+                <a href="dashboard-company-profile.html">
+                  <i className="la la-user-tie" />
+                  Company Profile
+                </a>
+              </li>
+              <li>
+                <a href="dashboard-post-job.html">
+                  <i className="la la-paper-plane" />
+                  Post a New Job
+                </a>
+              </li>
+              <li>
+                <a href="dashboard-manage-job.html">
+                  <i className="la la-briefcase" /> Manage Jobs{" "}
+                </a>
+              </li>
+              <li>
+                <a href="dashboard-applicants.html">
+                  <i className="la la-file-invoice" /> All Applicants
+                </a>
+              </li>
+              <li>
+                <a href="dashboard-resumes.html">
+                  <i className="la la-bookmark-o" />
+                  Shortlisted Resumes
+                </a>
+              </li>
+              <li>
+                <a href="dashboard-packages.html">
+                  <i className="la la-box" />
+                  Packages
+                </a>
+              </li>
+              <li>
+                <a href="dashboard-messages.html">
+                  <i className="fa-light fa-network-wired" />
+                  SME Connect
+                </a>
+              </li>
+              <li>
+                <a href="scheduled-meetings.html">
+                  <i className="fa-light fa-calendar-days" />
+                  Scheduled Interviews
+                </a>
+              </li>
+              <li>
+                <a href="dashboard-change-password.html">
+                  <i className="la la-lock" />
+                  Change Password
+                </a>
+              </li>
+              <li>
+                <a href="employers-single.html">
+                  <i className="la la-user-alt" />
+                  View Profile
+                </a>
+              </li>
+              <li>
+                <a href="index.html">
+                  <i className="la la-sign-out" />
+                  Logout
+                </a>
+              </li>
+              <li>
+                {/* <a onClick={notifyToggleAppliedJob}> */}
+                {/* <a>
+                  <i className="la la-trash" />
+                  Delete Profile
+                </a> */}
+              </li>
+            </ul>
+          </div>
+        </div>
         {/* End User Sidebar */}
         {/* Dashboard */}
         <section className="user-dashboard">

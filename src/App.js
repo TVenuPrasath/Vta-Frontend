@@ -12,6 +12,9 @@ import ManageJobs from "./pages/ManageJobs";
 import ResetPassword from "./pages/ResetPassword";
 import Jobs from "./pages/Jobs";
 import EditJobs from "./pages/EditJobs";
+import ProtectedRoute from "./pages/ProtectedRoute";
+import ApplyJob from "./pages/ApplyJob";
+import CandidateJobSingle from "./pages/CandidateJobSingle";
 
 
 function App() {
@@ -19,17 +22,28 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<RegisterPage/>} />
-        <Route path="/PostJob" element={<JobPost/>} /> 
-        <Route path="/ComapanyProfile" element={<CompanyProfile/>} />
-        <Route path="/CandidateDashboard" element={<CandidateDashboard/>} />
-        <Route path="/companydashboard" element={<CompanyDashboard/>} />
-        <Route path="/EmployerRegister" element={<EmployerRegister/>} />
         <Route path="/Login" element={<LoginPage/>} />
-        <Route path="/ManageJobs" element={<ManageJobs/>} />
-        <Route path="/reset-password" element={<ResetPassword/>} />
+        <Route path="/ComapanyProfile" element={<CompanyProfile/>} />
+
+        <Route element ={<ProtectedRoute allowedRoles={["company_admin"]}/>}>
+        <Route path="/EmployerRegister" element={<EmployerRegister/>} />
+        </Route>
+
+        <Route element= {<ProtectedRoute allowedRoles={["candidate"]}/>}>
         <Route path="/Jobs" element={<Jobs/>} />
-        <Route path="/EditJobs" element={<EditJobs/>} />
+        <Route path="/CandidateDashboard" element={<CandidateDashboard/>} />
+        <Route path="/ApplyJob/:jobId" element={<ApplyJob/>} />
+        <Route path="/CandidateJobSingle/:jobId" element={<CandidateJobSingle />} />
+        </Route>
+
+        <Route element = {<ProtectedRoute allowedRoles={["company_admin","recruiter"]}/>}>
+        <Route path="/PostJob" element={<JobPost/>} /> 
+        <Route path="/ManageJobs" element={<ManageJobs/>} />
         <Route path="/EditJobs/:jobId" element={<EditJobs />} />
+        <Route path="/companydashboard" element={<CompanyDashboard/>} />
+        </Route>
+
+        <Route path="/reset-password" element={<ResetPassword/>} />
         <Route path="/forgot-password/:role" element={<ForgetPassword />} />
       </Routes>
     </Router>

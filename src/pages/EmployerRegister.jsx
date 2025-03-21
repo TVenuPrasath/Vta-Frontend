@@ -180,60 +180,73 @@ const EmployerRegister = () => {
               <div className="nav-outer">
                 <div className="logo-box">
                   <div className="logo">
-                    <Link to="index.html">
+                    <a href="index.html">
                       <img
                         src="images/VTA-logo.png"
                         style={{ width: "60%", marginBottom: 5 }}
                         alt=""
                         title=""
                       />
-                    </Link>
+                    </a>
                   </div>
                 </div>
                 <nav className="nav main-menu">
                   <ul className="navigation" id="navbar">
                     <li>
-                      <Link to="index.html">Home</Link>
+                      <a href="index.html">Home</a>
                     </li>
                     <li>
-                      <Link to="about.html">About</Link>
+                      <a href="about.html">About</a>
                     </li>
                     <li>
-                      <Link to="jobs.html">Jobs</Link>
+                      <a href="jobs.html">Jobs</a>
                     </li>
                     <li>
-                      <Link to="companies.html">Companies</Link>
+                      <a href="companies.html">Companies</a>
                     </li>
                     <li>
-                      <Link to="courses.html">Courses</Link>
+                      <a href="courses.html">Courses</a>
                     </li>
                     {/* Only for Mobile View */}
                     <li className="mm-add-listing">
-                      <Link
-                        to="/EmployerRegister"
+                      <a
+                        href="dashboard-post-job.html"
                         className="theme-btn btn-style-one"
                       >
                         Job Post
-                      </Link>
+                      </a>
                       <span>
                         <span className="contact-info">
                           <span className="phone-num">
                             <span>Call us</span>
-                            <Link to="tel:1234567890">123 456 7890</Link>
+                            <a href="tel:1234567890">123 456 7890</a>
                           </span>
                           <span className="address">
                             329 Queensberry Street, North Melbourne VIC
                             <br />
                             3051, Australia.
                           </span>
-                          <Link
-                            to="mailto:support@superio.com"
+                          <a
+                            href="mailto:support@superio.com"
                             className="email"
                           >
                             support@superio.com
-                          </Link>
+                          </a>
                         </span>
-                        <span className="social-links"></span>
+                        <span className="social-links">
+                          <a href="#">
+                            <span className="fab fa-facebook-f" />
+                          </a>
+                          <a href="#">
+                            <span className="fab fa-twitter" />
+                          </a>
+                          <a href="#">
+                            <span className="fab fa-instagram" />
+                          </a>
+                          <a href="#">
+                            <span className="fab fa-linkedin-in" />
+                          </a>
+                        </span>
                       </span>
                     </li>
                   </ul>
@@ -245,14 +258,14 @@ const EmployerRegister = () => {
           {/* Mobile Header */}
           <div className="mobile-header">
             <div className="logo">
-              <Link to="index.html">
+              <a href="index.html">
                 <img
                   src="images/VTA-logo.png"
                   style={{ width: "60%", marginBottom: 5 }}
                   alt=""
                   title=""
                 />
-              </Link>
+              </a>
             </div>
             {/*Nav Box*/}
             <div className="nav-outer clearfix">
@@ -263,12 +276,12 @@ const EmployerRegister = () => {
                     <span className="icon-user" />
                   </Link>
                 </div>
-                <Link
-                  to="#nav-mobile"
+                <a
+                  href="#nav-mobile"
                   className="mobile-nav-toggler navbar-trigger"
                 >
                   <span className="flaticon-menu-1" />
-                </Link>
+                </a>
               </div>
             </div>
           </div>
@@ -873,19 +886,19 @@ const EmployerRegister = () => {
                 <div className="big-column col-xl-4 col-lg-3 col-md-12">
                   <div className="footer-column about-widget">
                     <div className="logo">
-                      <Link to="/EmployerRegister">
+                      <a href="#">
                         <img
                           src="images/VTA-logo.png"
                           style={{ width: "60%", marginBottom: 5 }}
                           alt=""
                         />
-                      </Link>
+                      </a>
                     </div>
                     <p className="phone-num">
                       <span>Call us </span>
-                      <Link to="thebeehost@support.com">1 (314) 732 0300</Link>
+                      <a href="thebeehost@support.com">1 (314) 732 0300</a>
                       <br />
-                      <Link to="thebeehost@support.com">+91 96000 85988</Link>
+                      <a href="thebeehost@support.com">+91 96000 85988</a>
                     </p>
                     <p className="address">
                       Akshaya HQ, Rajiv Gandhi Salai, Kazhipattur,
@@ -897,9 +910,9 @@ const EmployerRegister = () => {
                       <br />
                       Sacramento, CA 95811, USA.
                     </p>
-                    <Link to="mailto:support@infoziant.com" className="email">
+                    <a href="mailto:support@infoziant.com" className="email">
                       support@infoziant.com
-                    </Link>
+                    </a>
                   </div>
                 </div>
                 <div className="big-column col-xl-8 col-lg-9 col-md-12">
@@ -910,16 +923,22 @@ const EmployerRegister = () => {
                         <div className="widget-content">
                           <ul className="list">
                             <li>
-                              <Link to="ManageJobs">Browse Jobs</Link>
+                              <a href="jobs.html">Browse Jobs</a>
                             </li>
                             <li>
-                              <Link to="ManageJobs">Browse Jobs</Link>
+                              <a href="candidate-dashboard-resume.html">
+                                upload Resume
+                              </a>
                             </li>
                             <li>
-                              <Link to="ManageJobs">Browse Jobs</Link>
+                              <a href="candidate-dashboard.html">
+                                Find companies
+                              </a>
                             </li>
                             <li>
-                              <Link to="ManageJobs">Browse Jobs</Link>
+                              <a href="candidate-dashboard-job-alerts.html">
+                                Job Alerts
+                              </a>
                             </li>
                           </ul>
                         </div>
@@ -931,16 +950,16 @@ const EmployerRegister = () => {
                         <div className="widget-content">
                           <ul className="list">
                             <li>
-                              <Link to="ManageJobs">Employer login</Link>
+                              <a href="login.html">Employer login</a>
                             </li>
                             <li>
-                              <Link to="ManageJobs">Job Posting</Link>
+                              <a href="dashboard-post-job.html">Job posting</a>
                             </li>
                             <li>
-                              <Link to="ManageJobs">Discover Talent</Link>
+                              <a href="#">Discover Talent</a>
                             </li>
                             <li>
-                              <Link to="ManageJobs">Packages</Link>
+                              <a href="dashboard-packages.html">Packages</a>
                             </li>
                           </ul>
                         </div>
@@ -952,13 +971,13 @@ const EmployerRegister = () => {
                         <div className="widget-content">
                           <ul className="list">
                             <li>
-                              <Link to="ManageJobs">About</Link>
+                              <a href="about.html">About</a>
                             </li>
                             <li>
-                              <Link to="ManageJobs">Contact</Link>
+                              <a href="contact.html">Contact</a>
                             </li>
                             <li>
-                              <Link to="ManageJobs">FAQ</Link>
+                              <a href="faqs.html">FAQ</a>
                             </li>
                           </ul>
                         </div>
@@ -970,16 +989,20 @@ const EmployerRegister = () => {
                         <div className="widget-content">
                           <ul className="list">
                             <li>
-                              <Link to="ManageJobs">All Courses</Link>
+                              <a href="courses-allcourse.html">All courses</a>
                             </li>
                             <li>
-                              <Link to="ManageJobs">My Courses</Link>
+                              <a href="course-enrolled.html">My courses</a>
                             </li>
                             <li>
-                              <Link to="ManageJobs">Completed Courses</Link>
+                              <a href="completedcourses.html">
+                                Completed Courses
+                              </a>
                             </li>
                             <li>
-                              <Link to="ManageJobs">Skill Assesment</Link>
+                              <a href="SkillAssesmentdashboard.html">
+                                Skill Assessment
+                              </a>
                             </li>
                           </ul>
                         </div>
@@ -995,21 +1018,21 @@ const EmployerRegister = () => {
             <div className="auto-container">
               <div className="outer-box">
                 <div className="copyright-text">
-                  © 2024 <Link to="">VTA</Link>. All Right Reserved.
+                  © 2024 <a href="#">VTA</a>. All Right Reserved.
                 </div>
                 <div className="social-links">
-                  <Link to="">
+                  <a href="#">
                     <i className="fab fa-facebook-f" />
-                  </Link>
-                  <Link to="">
+                  </a>
+                  <a href="#">
                     <i className="fab fa-twitter" />
-                  </Link>
-                  <Link to="">
+                  </a>
+                  <a href="#">
                     <i className="fab fa-instagram" />
-                  </Link>
-                  <Link to="">
+                  </a>
+                  <a href="#">
                     <i className="fab fa-linkedin-in" />
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>

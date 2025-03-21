@@ -26,7 +26,7 @@ const CompanyDashboard = () => {
             <div className="nav-outer">
               <div className="logo-box">
                 <div className="logo">
-                  <Link to="index.html">
+                  <a href="index.html">
                     <img
                       src="images/VTA.png"
                       width={154}
@@ -34,7 +34,7 @@ const CompanyDashboard = () => {
                       alt=""
                       title=""
                     />
-                  </Link>
+                  </a>
                 </div>
               </div>
               {/* Main Menu End*/}
@@ -45,7 +45,7 @@ const CompanyDashboard = () => {
               </button>
               {/* Dashboard Option */}
               <div className="dropdown dashboard-option">
-                <Link
+                <a
                   className="dropdown-toggle"
                   role="button"
                   data-toggle="dropdown"
@@ -57,19 +57,19 @@ const CompanyDashboard = () => {
                     className="thumb"
                   />
                   <span className="name">My Account</span>
-                </Link>
+                </a>
                 <ul className="dropdown-menu">
                   <li>
-                    <Link to="/companydashboard">
+                    <a href="account.html">
                       <i className="fa fa-cog" />
                       Settings
-                    </Link>
+                    </a>
                   </li>
                   <li>
-                    <Link to="index.html">
+                    <a href="index.html">
                       <i className="la la-sign-out" />
                       Logout
-                    </Link>
+                    </a>
                   </li>
                 </ul>
               </div>
@@ -79,7 +79,7 @@ const CompanyDashboard = () => {
         {/* Mobile Header */}
         <div className="mobile-header">
           <div className="logo">
-            <Link to="index.html">
+            <a href="index.html">
               <img
                 src="images/VTA.png"
                 alt=""
@@ -87,16 +87,16 @@ const CompanyDashboard = () => {
                 height={50}
                 title=""
               />
-            </Link>
+            </a>
           </div>
           {/*Nav Box*/}
           <div className="nav-outer clearfix">
             <div className="outer-box">
               {/* Login/Register */}
               <div className="login-box">
-                <Link to="/Login" className="call-modal" onClick={handleLogout}>
+                <a href="/Login" className="call-modal" onClick={handleLogout}>
                   <span className="icon-user" />
-                </Link>
+                </a>
               </div>
               <button id="toggle-user-sidebar">
                 <img
@@ -116,12 +116,94 @@ const CompanyDashboard = () => {
       {/* Sidebar Backdrop */}
       <div className="sidebar-backdrop" />
       {/* User Sidebar */}
+      <div className="user-sidebar">
+        <div className="sidebar-inner">
+          <ul className="navigation">
+            <li className="active">
+              <a href="dashboard.html">
+                {" "}
+                <i className="la la-home" /> Dashboard
+              </a>
+            </li>
+            <li>
+              <a href="dashboard-company-profile.html">
+                <i className="la la-user-tie" />
+                Company Profile
+              </a>
+            </li>
+            <li>
+              <Link to="/PostJob">
+                <i className="la la-paper-plane" />
+                Post a New Job
+              </Link>
+            </li>
+            <li>
+              <a href="dashboard-manage-job.html">
+                <i className="la la-briefcase" /> Manage Jobs{" "}
+              </a>
+            </li>
+            <li>
+              <a href="dashboard-applicants.html">
+                <i className="la la-file-invoice" /> All Applicants
+              </a>
+            </li>
+            <li>
+              <a href="dashboard-resumes.html">
+                <i className="la la-bookmark-o" />
+                Shortlisted Resumes
+              </a>
+            </li>
+            <li>
+              <a href="dashboard-packages.html">
+                <i className="la la-box" />
+                Packages
+              </a>
+            </li>
+            <li>
+              <a href="candidate-inbox.html">
+                <i className="la la-comment-o" />
+                Messages
+              </a>
+            </li>
+            <li>
+              <a href="scheduled-meetings.html">
+                <i className="fa-light fa-calendar-days" />
+                Scheduled Interviews
+              </a>
+            </li>
+            <li>
+              <a href="dashboard-change-password.html">
+                <i className="la la-lock" />
+                Change Password
+              </a>
+            </li>
+            <li>
+              <a href="employers-single.html">
+                <i className="la la-user-alt" />
+                View Profile
+              </a>
+            </li>
+            <li>
+              <a href="index.html">
+                <i className="la la-sign-out" />
+                Logout
+              </a>
+            </li>
+            <li>
+              <a onclick="showCandModal()">
+                <i className="la la-trash" />
+                Delete Profile
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
       {/* End User Sidebar */}
       {/* dasgboard 1 */}
       <div className="box-head">
         <h2>Hiring Candidate With Ease!</h2>
         <section className="boxes-section" style={{ padding: "0%" }}>
-          <Link to="/PostJob"></Link>
+          <a href="dashboard-post-job.html"></a>
           <div className="box pastel-blue">
             <Link to="/PostJob">
               <div className="flash box-content">
@@ -135,38 +217,38 @@ const CompanyDashboard = () => {
               <div className="shape triangle" />
             </div>
           </div>
-          <Link tp="/PostJob"></Link>
+          <a href="candidates.html"></a>
           <div className="box pastel-pink">
-            <Link to="/companydashboard">
+            <a href="candidates.html">
               <div className="box-content">
                 {/* <i class="fa-solid fa-magnifying-glass" id="box-icon-2"></i> */}
                 {/* <i class="fas fa-cogs" id="box-icon-2"></i> */}
                 <img src="images/icons/person_search.png" alt="" />
                 <h3>Discover Talent</h3>
               </div>
-            </Link>
+            </a>
             <div className="shapes">
               <div className="shape circle" />
               <div className="shape square" />
             </div>
           </div>
-          <Link to="/PostJob"></Link>
+          <a href="pricing.html"></a>
           <div className="box pastel-green">
-            <Link to="/PostJob">
+            <a href="pricing.html">
               <div className="box-content">
-                <img src="images/icons/workspace_premium.png" alt="" />
+                <img src="images/icons/workspace_premium.png" />
                 <h3>Go Premium</h3>
               </div>
-            </Link>
+            </a>
             <div className="shapes">
               <div className="shape circle" />
               <div className="shape hexagon" />
             </div>
           </div>
-          <Link to="/PostJob"></Link>
+          <a href="pricing.html"></a>
           {userRole === "company_admin" && (
             <div className="box pastel-green">
-              <Link to="/EmployerRegister">
+              <a href="EmployerRegister">
                 <div className="box-content">
                   <img
                     src="images/icons/person_search.png"
@@ -174,7 +256,7 @@ const CompanyDashboard = () => {
                   />
                   <h3>Add Recruiter</h3>
                 </div>
-              </Link>
+              </a>
             </div>
           )}
           <div className="shapes">
@@ -204,12 +286,12 @@ const CompanyDashboard = () => {
                   <div className="left">
                     <i className="icon la la-file-invoice" />
                   </div>
-                  <Link to="/companydashboard">
+                  <a href="dashboard-applicants.html">
                     <div className="right">
                       <h4>9382</h4>
                       <p>Application</p>
                     </div>
-                  </Link>
+                  </a>
                 </div>
               </div>
               <div className="ui-block col-xl-3 col-lg-6 col-md-6 col-sm-12">
@@ -217,12 +299,12 @@ const CompanyDashboard = () => {
                   <div className="left">
                     <i className="icon la la-comment-o" />
                   </div>
-                  <Link to="companydashboard">
+                  <a href="candidate-inbox.html">
                     <div className="right">
                       <h4>74</h4>
                       <p>Messages</p>
                     </div>
-                  </Link>
+                  </a>
                 </div>
               </div>
               <div className="ui-block col-xl-3 col-lg-6 col-md-6 col-sm-12">
@@ -230,12 +312,12 @@ const CompanyDashboard = () => {
                   <div className="left">
                     <i className="icon la la-bookmark-o" />
                   </div>
-                  <Link to="companydashboard">
+                  <a href="dashboard-resumes.html">
                     <div className="right">
                       <h4>32</h4>
                       <p>Shortlist</p>
                     </div>
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>
@@ -320,12 +402,12 @@ const CompanyDashboard = () => {
                                   <div className="option-box">
                                     <ul className="option-list">
                                       <li>
-                                        <Link
-                                          to="/companydashboard"
+                                        <a
+                                          href="candidates-single.html"
                                           data-text="View application"
                                         >
                                           <span className="la la-eye" />
-                                        </Link>
+                                        </a>
                                       </li>
                                       <li>
                                         <button
@@ -408,12 +490,12 @@ const CompanyDashboard = () => {
                                   <div className="option-box">
                                     <ul className="option-list">
                                       <li>
-                                        <Link
-                                          to="/companydashboard"
+                                        <a
+                                          href="candidates-single.html"
                                           data-text="View application"
                                         >
                                           <span className="la la-eye" />
-                                        </Link>
+                                        </a>
                                       </li>
                                       <li>
                                         <button
@@ -496,12 +578,12 @@ const CompanyDashboard = () => {
                                   <div className="option-box">
                                     <ul className="option-list">
                                       <li>
-                                        <Link
-                                          to="companydashboard"
+                                        <a
+                                          href="candidates-single.html"
                                           data-text="View application"
                                         >
                                           <span className="la la-eye" />
-                                        </Link>
+                                        </a>
                                       </li>
                                       <li>
                                         <button
@@ -584,12 +666,12 @@ const CompanyDashboard = () => {
                                   <div className="option-box">
                                     <ul className="option-list">
                                       <li>
-                                        <Link
-                                          to="candidates-single.html"
+                                        <a
+                                          href="candidates-single.html"
                                           data-text="View application"
                                         >
                                           <span className="la la-eye" />
-                                        </Link>
+                                        </a>
                                       </li>
                                       <li>
                                         <button
@@ -672,12 +754,12 @@ const CompanyDashboard = () => {
                                   <div className="option-box">
                                     <ul className="option-list">
                                       <li>
-                                        <Link
-                                          to="/companydashboard"
+                                        <a
+                                          href="candidates-single.html"
                                           data-text="View application"
                                         >
                                           <span className="la la-eye" />
-                                        </Link>
+                                        </a>
                                       </li>
                                       <li>
                                         <button
@@ -760,12 +842,12 @@ const CompanyDashboard = () => {
                                   <div className="option-box">
                                     <ul className="option-list">
                                       <li>
-                                        <Link
-                                          to="/companydashboard"
+                                        <a
+                                          href="candidates-single.html"
                                           data-text="View application"
                                         >
                                           <span className="la la-eye" />
-                                        </Link>
+                                        </a>
                                       </li>
                                       <li>
                                         <button
@@ -832,10 +914,17 @@ const CompanyDashboard = () => {
                                 Full Stack Developer
                               </span>
                               <div className="content">
-                                <ul
-                                  className="post-tags"
-                                  id="candidate-tags"
-                                ></ul>
+                                <ul className="post-tags" id="candidate-tags">
+                                  <li>
+                                    <a href="#">MernStack</a>
+                                  </li>
+                                  <li>
+                                    <a href="#">Django</a>
+                                  </li>
+                                  <li>
+                                    <a href="#">webdevloper</a>
+                                  </li>
+                                </ul>
                                 <ul className="candidate-info">
                                   <li>
                                     <span className="icon flaticon-map-locator" />
@@ -853,6 +942,7 @@ const CompanyDashboard = () => {
                                 <div className="resume-summarise-button btn">
                                   <button
                                     id="candidate-resume"
+                                    href="#"
                                     className="summarise-button theme-btn btn-style-one"
                                   >
                                     Download Resume
@@ -860,6 +950,7 @@ const CompanyDashboard = () => {
                                   <button
                                     onclick="summaryCandidate(showCand)"
                                     id="candidate-summarise"
+                                    href="#"
                                     className="summarise-button theme-btn btn-style-one"
                                   >
                                     Summarise Candidate
@@ -971,7 +1062,9 @@ const CompanyDashboard = () => {
                                 alt=""
                               />
                             </figure>
-                            <h4 className="name"></h4>
+                            <h4 className="name">
+                              <a href="#">Darlene Robertson</a>
+                            </h4>
                             <ul className="candidate-info">
                               <li className="designation">UI Designer</li>
                               <li>
@@ -983,17 +1076,27 @@ const CompanyDashboard = () => {
                                 hour
                               </li>
                             </ul>
-                            <ul className="post-tags"></ul>
+                            <ul className="post-tags">
+                              <li>
+                                <a href="#">App</a>
+                              </li>
+                              <li>
+                                <a href="#">Design</a>
+                              </li>
+                              <li>
+                                <a href="#">Digital</a>
+                              </li>
+                            </ul>
                           </div>
                           <div className="option-box">
                             <ul className="option-list">
                               <li>
-                                <Link
-                                  to="/companydashboard"
+                                <a
+                                  href="candidates-single.html"
                                   data-text="View application"
                                 >
                                   <span className="la la-eye" />
-                                </Link>
+                                </a>
                               </li>
                               <li>
                                 <button
@@ -1035,7 +1138,9 @@ const CompanyDashboard = () => {
                                 alt=""
                               />
                             </figure>
-                            <h4 className="name"></h4>
+                            <h4 className="name">
+                              <a href="#">Wade Warren</a>
+                            </h4>
                             <ul className="candidate-info">
                               <li className="designation">UI Designer</li>
                               <li>
@@ -1047,17 +1152,27 @@ const CompanyDashboard = () => {
                                 hour
                               </li>
                             </ul>
-                            <ul className="post-tags"></ul>
+                            <ul className="post-tags">
+                              <li>
+                                <a href="#">App</a>
+                              </li>
+                              <li>
+                                <a href="#">Design</a>
+                              </li>
+                              <li>
+                                <a href="#">Digital</a>
+                              </li>
+                            </ul>
                           </div>
                           <div className="option-box">
                             <ul className="option-list">
                               <li>
-                                <Link
-                                  to="/companydashboard"
+                                <a
+                                  href="candidates-single.html"
                                   data-text="View application"
                                 >
                                   <span className="la la-eye" />
-                                </Link>
+                                </a>
                               </li>
                               <li>
                                 <button
@@ -1099,7 +1214,9 @@ const CompanyDashboard = () => {
                                 alt=""
                               />
                             </figure>
-                            <h4 className="name"></h4>
+                            <h4 className="name">
+                              <a href="#">Leslie Alexander</a>
+                            </h4>
                             <ul className="candidate-info">
                               <li className="designation">UI Designer</li>
                               <li>
@@ -1107,17 +1224,27 @@ const CompanyDashboard = () => {
                                 London, UK
                               </li>
                             </ul>
-                            <ul className="post-tags"></ul>
+                            <ul className="post-tags">
+                              <li>
+                                <a href="#">App</a>
+                              </li>
+                              <li>
+                                <a href="#">Design</a>
+                              </li>
+                              <li>
+                                <a href="#">Digital</a>
+                              </li>
+                            </ul>
                           </div>
                           <div className="option-box">
                             <ul className="option-list">
                               <li>
-                                <Link
-                                  to="/companydashboard"
+                                <a
+                                  href="candidates-single.html"
                                   data-text="View application"
                                 >
                                   <span className="la la-eye" />
-                                </Link>
+                                </a>
                               </li>
                               <li>
                                 <button
@@ -1159,7 +1286,9 @@ const CompanyDashboard = () => {
                                 alt=""
                               />
                             </figure>
-                            <h4 className="name"></h4>
+                            <h4 className="name">
+                              <a href="#">Darlene Robertson</a>
+                            </h4>
                             <ul className="candidate-info">
                               <li className="designation">UI Designer</li>
                               <li>
@@ -1167,17 +1296,27 @@ const CompanyDashboard = () => {
                                 London, UK
                               </li>
                             </ul>
-                            <ul className="post-tags"></ul>
+                            <ul className="post-tags">
+                              <li>
+                                <a href="#">App</a>
+                              </li>
+                              <li>
+                                <a href="#">Design</a>
+                              </li>
+                              <li>
+                                <a href="#">Digital</a>
+                              </li>
+                            </ul>
                           </div>
                           <div className="option-box">
                             <ul className="option-list">
                               <li>
-                                <Link
-                                  to="/companydashboard"
+                                <a
+                                  href="candidates-single.html"
                                   data-text="View application"
                                 >
                                   <span className="la la-eye" />
-                                </Link>
+                                </a>
                               </li>
                               <li>
                                 <button
@@ -1219,7 +1358,9 @@ const CompanyDashboard = () => {
                                 alt=""
                               />
                             </figure>
-                            <h4 className="name"></h4>
+                            <h4 className="name">
+                              <a href="#">Wade Warren</a>
+                            </h4>
                             <ul className="candidate-info">
                               <li className="designation">UI Designer</li>
                               <li>
@@ -1227,17 +1368,27 @@ const CompanyDashboard = () => {
                                 London, UK
                               </li>
                             </ul>
-                            <ul className="post-tags"></ul>
+                            <ul className="post-tags">
+                              <li>
+                                <a href="#">App</a>
+                              </li>
+                              <li>
+                                <a href="#">Design</a>
+                              </li>
+                              <li>
+                                <a href="#">Digital</a>
+                              </li>
+                            </ul>
                           </div>
                           <div className="option-box">
                             <ul className="option-list">
                               <li>
-                                <Link
-                                  to="/companydashboard"
+                                <a
+                                  href="candidates-single.html"
                                   data-text="View application"
                                 >
                                   <span className="la la-eye" />
-                                </Link>
+                                </a>
                               </li>
                               <li>
                                 <button
@@ -1279,7 +1430,9 @@ const CompanyDashboard = () => {
                                 alt=""
                               />
                             </figure>
-                            <h4 className="name"></h4>
+                            <h4 className="name">
+                              <a href="#">Leslie Alexander</a>
+                            </h4>
                             <ul className="candidate-info">
                               <li className="designation">UI Designer</li>
                               <li>
@@ -1287,17 +1440,27 @@ const CompanyDashboard = () => {
                                 London, UK
                               </li>
                             </ul>
-                            <ul className="post-tags"></ul>
+                            <ul className="post-tags">
+                              <li>
+                                <a href="#">App</a>
+                              </li>
+                              <li>
+                                <a href="#">Design</a>
+                              </li>
+                              <li>
+                                <a href="#">Digital</a>
+                              </li>
+                            </ul>
                           </div>
                           <div className="option-box">
                             <ul className="option-list">
                               <li>
-                                <Link
-                                  to="/companydashboard"
+                                <a
+                                  href="candidates-single.html"
                                   data-text="View application"
                                 >
                                   <span className="la la-eye" />
-                                </Link>
+                                </a>
                               </li>
                               <li>
                                 <button

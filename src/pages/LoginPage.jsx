@@ -31,9 +31,9 @@ const Login = () => {
     // console.log("selectedRole:", selectedRole);
     const loginUrl =
       selectedRole === "candidate"
-        ? // ? "http://localhost:4000/api/candidate/login"
-          "https://vta-backend-production.up.railway.app/api/candidate/login"
-        : "http://localhost:4000/api/company/login";
+        ? "http://localhost:4000/api/candidate/login"
+        : // ?"https://vta-backend-production.up.railway.app/api/candidate/login"
+          "http://localhost:4000/api/company/login";
 
     try {
       // console.log("loginUrl:", loginUrl);
@@ -98,49 +98,49 @@ const Login = () => {
               <div className="nav-outer">
                 <div className="logo-box">
                   <div className="logo">
-                    <Link to="index.html">
+                    <a href="index.html">
                       <img
                         src="images/VTA-logo.png"
                         style={{ width: "60%", marginBottom: 5 }}
                         alt="VTA Logo"
                       />
-                    </Link>
+                    </a>
                   </div>
                 </div>
                 <nav className="nav main-menu">
                   <ul className="navigation" id="navbar">
                     <li className="current">
-                      <Link to="index.html">Home</Link>
+                      <a href="index.html">Home</a>
                     </li>
                     <li>
-                      <Link to="about.html">About</Link>
+                      <a href="about.html">About</a>
                     </li>
                     <li>
-                      <Link to="jobs.html">Jobs</Link>
+                      <a href="jobs.html">Jobs</a>
                     </li>
                     <li>
-                      <Link to="companies.html">Companies</Link>
+                      <a href="companies.html">Companies</a>
                     </li>
                     <li>
-                      <Link to="courses.html">Courses</Link>
+                      <a href="courses.html">Courses</a>
                     </li>
                   </ul>
                 </nav>
               </div>
               <div className="outer-box">
                 <div className="btn-box">
-                  <Link
-                    to="register.html"
+                  <a
+                    href="register.html"
                     className="theme-btn theme-clone bdrs30"
                   >
                     Register
-                  </Link>
-                  <Link
-                    to="login.html"
+                  </a>
+                  <a
+                    href="login.html"
                     className="home21-jp-btn login-btn bdrs30"
                   >
                     Login
-                  </Link>
+                  </a>
                 </div>
               </div>
             </div>

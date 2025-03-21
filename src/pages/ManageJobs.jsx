@@ -60,14 +60,14 @@ const ManageJobs = () => {
               <div className="nav-outer">
                 <div className="logo-box">
                   <div className="logo">
-                    <Link to="index.html">
+                    <a href="index.html">
                       <img
                         src="images/VTA-logo.png"
                         style={{ width: "60%", marginBottom: 5 }}
                         alt=""
                         title=""
                       />
-                    </Link>
+                    </a>
                   </div>
                 </div>
                 {/* Main Menu End*/}
@@ -81,7 +81,33 @@ const ManageJobs = () => {
                 </button>
                 {/* Dashboard Option */}
                 <div className="dropdown dashboard-option">
-                  <ul className="dropdown-menu"></ul>
+                  {/* <a
+                    className="dropdown-toggle"
+                    role="button"
+                    data-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    <img
+                      src="images/resource/company-6.png"
+                      alt="avatar"
+                      className="thumb"
+                    />
+                    <span className="name">My Account</span>
+                  </a> */}
+                  <ul className="dropdown-menu">
+                    <li>
+                      <a href="account.html">
+                        <i className="fa fa-cog" />
+                        Settings
+                      </a>
+                    </li>
+                    <li>
+                      <a href="index.html">
+                        <i className="la la-sign-out" />
+                        Logout
+                      </a>
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
@@ -89,23 +115,23 @@ const ManageJobs = () => {
           {/* Mobile Header */}
           <div className="mobile-header">
             <div className="logo">
-              <Link to="index.html">
+              <a href="index.html">
                 <img
                   src="images/VTA.png"
                   alt=""
                   title=""
                   style={{ width: 150, height: "auto" }}
                 />
-              </Link>
+              </a>
             </div>
             {/*Nav Box*/}
             <div className="nav-outer clearfix">
               <div className="outer-box">
                 {/* Login/Register */}
                 <div className="login-box">
-                  <Link to="/Login" className="call-modal">
+                  <a href="login-popup.html" className="call-modal">
                     <span className="icon-user" />
-                  </Link>
+                  </a>
                 </div>
                 <button id="toggle-user-sidebar">
                   <img
@@ -125,6 +151,88 @@ const ManageJobs = () => {
         {/* Sidebar Backdrop */}
         <div className="sidebar-backdrop" />
         {/* User Sidebar */}
+        <div className="user-sidebar">
+          <div className="sidebar-inner">
+            <ul className="navigation">
+              <li>
+                <a href="dashboard.html">
+                  {" "}
+                  <i className="la la-home" /> Dashboard
+                </a>
+              </li>
+              <li>
+                <a href="dashboard-company-profile.html">
+                  <i className="la la-user-tie" />
+                  Company Profile
+                </a>
+              </li>
+              <li>
+                <a href="dashboard-post-job.html">
+                  <i className="la la-paper-plane" />
+                  Post a New Job
+                </a>
+              </li>
+              <li className="active">
+                <a href="dashboard-manage-job.html">
+                  <i className="la la-briefcase" /> Manage Jobs{" "}
+                </a>
+              </li>
+              <li>
+                <a href="dashboard-applicants.html">
+                  <i className="la la-file-invoice" /> All Applicants
+                </a>
+              </li>
+              <li>
+                <a href="dashboard-resumes.html">
+                  <i className="la la-bookmark-o" />
+                  Shortlisted Resumes
+                </a>
+              </li>
+              <li>
+                <a href="dashboard-packages.html">
+                  <i className="la la-box" />
+                  Packages
+                </a>
+              </li>
+              <li>
+                <a href="dashboard-messages.html">
+                  <i className="la la-comment-o" />
+                  Messages
+                </a>
+              </li>
+              <li>
+                <a href="scheduled-meetings.html">
+                  <i className="fa-light fa-calendar-days" />
+                  Scheduled Interviews
+                </a>
+              </li>
+              <li>
+                <a href="dashboard-change-password.html">
+                  <i className="la la-lock" />
+                  Change Password
+                </a>
+              </li>
+              <li>
+                <a href="employers-single.html">
+                  <i className="la la-user-alt" />
+                  View Profile
+                </a>
+              </li>
+              <li>
+                <a href="index.html">
+                  <i className="la la-sign-out" />
+                  Logout
+                </a>
+              </li>
+              <li>
+                {/* <a onclick="showCandModal()">
+                  <i className="la la-trash" />
+                  Delete Profile
+                </a> */}
+              </li>
+            </ul>
+          </div>
+        </div>
         {/* End User Sidebar */}
         {/* Dashboard */}
         <section className="user-dashboard">
@@ -176,14 +284,14 @@ const ManageJobs = () => {
                                   </span>
                                 </td>
                                 <td className="applied">
-                                  <Link
-                                    to={`dashboard-applied-applicants/${job._id}`}
+                                  <a
+                                    href={`dashboard-applied-applicants/${job._id}`}
                                   >
                                     {job.applications
                                       ? job.applications.length
                                       : "0"}{" "}
                                     Applied
-                                  </Link>
+                                  </a>
                                 </td>
                                 <td>
                                   {new Date(job.createdAt).toLocaleDateString()}{" "}
@@ -197,13 +305,13 @@ const ManageJobs = () => {
                                   <div className="option-box">
                                     <ul className="option-list">
                                       <li>
-                                        <Link
-                                          to={`dashboard-manage-job-view/${job._id}`}
+                                        <a
+                                          href={`dashboard-manage-job-view/${job._id}`}
                                         >
                                           <button data-text="View">
                                             <span className="la la-eye" />
                                           </button>
-                                        </Link>
+                                        </a>
                                       </li>
                                       <li>
                                         <Link to={`/EditJobs/${job._id}`}>
