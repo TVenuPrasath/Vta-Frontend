@@ -22,6 +22,9 @@
     border-top: 1px solid rgb(212, 210, 210);
     background-color: white;
     border-radius: 10px;
+    display: none;
+    padding: 2vw;
+    border-radius: 5px;
 }
 .job-apply-form h4{
     color: rgb(66, 64, 64);
@@ -56,11 +59,12 @@
     padding: 3px 7px;
     color: rgb(66, 64, 64);
 }
-form {
+/* overrides search bar in jobs form */
+/* form {
     display: none;
     padding: 2vw;
     border-radius: 5px;
-}
+} */ 
 
 form.active {
     display: block;

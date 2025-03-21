@@ -31,9 +31,9 @@ const Login = () => {
     // console.log("selectedRole:", selectedRole);
     const loginUrl =
       selectedRole === "candidate"
-        ? // ? "http://localhost:4000/api/candidate/login"
-          "https://vta-backend-production.up.railway.app/api/candidate/login"
-        : "http://localhost:4000/api/company/login";
+        ? "http://localhost:4000/api/candidate/login"
+        : // ?"https://vta-backend-production.up.railway.app/api/candidate/login"
+          "http://localhost:4000/api/company/login";
 
     try {
       // console.log("loginUrl:", loginUrl);

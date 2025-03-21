@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import TemporaryDrawer from "./SideBar";
+import { Link, useNavigate } from "react-router-dom";
 
 const Jobs = () => {
   const [jobs, setJobs] = useState([]);
@@ -13,6 +14,7 @@ const Jobs = () => {
   const [datePosted, setDatePosted] = useState("");
   const [experience, setExperience] = useState("");
   const [salary, setSalary] = useState("");
+  const navigate = useNavigate();
 
   const applyFilters = () => {
     let filtered = jobs;
@@ -397,6 +399,9 @@ const Jobs = () => {
                       <div
                         key={job._id}
                         className="job-block-four col-xl-3 col-lg-4 col-md-6 col-sm-12"
+                        onClick={() =>
+                          navigate(`/CandidateJobSingle/${job._id}`)
+                        }
                       >
                         <div className="inner-box">
                           <ul className="job-other-info">
@@ -412,9 +417,9 @@ const Jobs = () => {
                             {job.companyName || "Unknown Company"}
                           </span>
                           <h4>
-                            <a href={`job-single.html?id=${job._id}`}>
+                            <Link to={`/CandidateJobSingle/${job._id}`}>
                               {job.title}
-                            </a>
+                            </Link>
                           </h4>
                           <div className="location">
                             <span className="icon flaticon-map-locator" />{" "}

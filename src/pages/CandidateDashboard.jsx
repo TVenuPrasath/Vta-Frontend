@@ -18,14 +18,12 @@ const CandidateDashboard = () => {
               <div className="nav-outer">
                 <div className="logo-box">
                   <div className="logo">
-                    <a href="">
-                      <img
-                        src="images/VTA-logo.png"
-                        style={{ width: "60%", marginBottom: 5 }}
-                        alt="logo"
-                        title=""
-                      />
-                    </a>
+                    <img
+                      src="images/VTA-logo.png"
+                      style={{ width: "60%", marginBottom: 5 }}
+                      alt="logo"
+                      title=""
+                    />
                   </div>
                 </div>
                 <nav className="nav main-menu">
